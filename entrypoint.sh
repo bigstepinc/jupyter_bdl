@@ -31,7 +31,7 @@ if [ "$MODE" == "jupyter" ]; then
 	
 	# export NOTEBOOK_PASSWORD=$(cat $NOTEBOOK_SECRETS_PATH/NOTEBOOK_PASSWORD)
 
-	pass=$(python /opt/password.py  $NOTEBOOK_PASSWORD)
+	export pass=$(python /opt/password.py  $NOTEBOOK_PASSWORD)
 	sed "s/#c.NotebookApp.password = ''/c.NotebookApp.password = \'$pass\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
 	mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
 
