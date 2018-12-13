@@ -33,13 +33,13 @@ RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://downloa
 RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk1.8.0_191/jre/lib/security/ && cp UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk1.8.0_191/jre/lib/security/
 RUN rm -rf UnlimitedJCEPolicyJDK8
 
-# Install Spark 2.3.0
-RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz && \
-   tar xzvf /opt/spark-2.3.0-bin-hadoop2.7.tgz && \
-   rm  /opt/spark-2.3.0-bin-hadoop2.7.tgz 
+# Install Spark 2.4.0
+RUN cd /opt && wget https://www-eu.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz && \
+   tar xzvf /opt/spark-2.4.0-bin-hadoop2.7.tgz && \
+   rm  /opt/spark-2.4.0-bin-hadoop2.7.tgz 
    
 # Spark pointers for Jupyter Notebook
-ENV SPARK_HOME /opt/spark-2.3.0-bin-hadoop2.7
+ENV SPARK_HOME /opt/spark-2.4.0-bin-hadoop2.7
 ENV R_LIBS_USER $SPARK_HOME/R/lib:/opt/conda/envs/ir/lib/R/library:/opt/conda/lib/R/library
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 
