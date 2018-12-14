@@ -8,7 +8,7 @@ ADD handlers.py /opt/
 RUN apt-get update -y
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim 
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim nose pillow
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
@@ -16,9 +16,6 @@ RUN npm install yarn -g
 # Install Java 8
 ENV JAVA_HOME /opt/jdk1.8.0_191
 ENV PATH $PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin:/etc/alternatives:/var/lib/dpkg/alternatives
-
-RUN apt-get -qq update -y
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git
 
 RUN cd /opt && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz" &&\
    tar xzf jdk-8u191-linux-x64.tar.gz && rm -rf jdk-8u191-linux-x64.tar.gz
