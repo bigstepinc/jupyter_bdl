@@ -20,6 +20,12 @@ if [ "$NOTEBOOK_DIR" != "" ]; then
 	
 fi
 
+if [ "$USER_ID" != "" ]; then
+	echo "c = get_config()" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.Examples.user_id = \'$USER_ID\'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
+fi
+
 if [ "$MODE" == "" ]; then
 MODE=$1
 fi
