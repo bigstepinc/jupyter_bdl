@@ -8,7 +8,7 @@ ADD handlers.py /opt/
 RUN apt-get update -y
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim nose pillow
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
@@ -120,6 +120,8 @@ RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/datalab_getting_started
 #RUN apt-get install -y libcairo2-dev  python3-cairo-dev
 RUN apt-get install -y make
 
+RUN pip install nose pillow
+
 RUN cd /tmp && \
     wget "http://repo.bigstepcloud.com/bigstep/datalab/sbt-0.13.11.tgz" -O /tmp/sbt-0.13.11.tgz && \
     tar -xvf /tmp/sbt-0.13.11.tgz -C /usr/local && \
@@ -141,6 +143,22 @@ RUN cd /opt && \
     
 RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Scala%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
+
+# Install bdl_notebooks
+RUN git clone https://bitbucket.org/Costina/bdl_client/src/master/ && \
+   cd master && \
+   pip install . && \
+   cd .. && \
+   rm -rf master && \
+   git clone https://bitbucket.org/Costina/bdl_notebooks/src/master/ && \
+   cd master && \
+   pip install . && \
+   cd .. && \
+   rm -rf master && \
+   jupyter nbextension install --py bdl_notebooks --sys-prefix && \
+   jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
+   jupyter serverextension enable --py bdl_notebooks --sys-prefix
+   
 
 
 #Install SparkMonitor extension
