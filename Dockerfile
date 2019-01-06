@@ -145,16 +145,16 @@ RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Sta
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
 
 # Install bdl_notebooks
-RUN git clone https://bitbucket.org/Costina/bdl_client/src/master/ && \
-   cd master && \
-   pip install . && \
-   cd .. && \
-   rm -rf master && \
-   git clone https://bitbucket.org/Costina/bdl_notebooks/src/master/ && \
-   cd master && \
-   pip install . && \
-   cd .. && \
-   rm -rf master 
+#RUN git clone https://bitbucket.org/Costina/bdl_client/src/master/ && \
+#   cd master && \
+#   pip install . && \
+#   cd .. && \
+#   rm -rf master && \
+#   git clone https://bitbucket.org/Costina/bdl_notebooks/src/master/ && \
+#   cd master && \
+#   pip install . && \
+#   cd .. && \
+#   rm -rf master 
    #jupyter nbextension install --py bdl_notebooks --sys-prefix && \
    #jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
    #jupyter serverextension enable --py bdl_notebooks --sys-prefix
