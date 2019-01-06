@@ -154,10 +154,10 @@ RUN git clone https://bitbucket.org/Costina/bdl_client/src/master/ && \
    cd master && \
    pip install . && \
    cd .. && \
-   rm -rf master && \
-   jupyter nbextension install --py bdl_notebooks --sys-prefix && \
-   jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-   jupyter serverextension enable --py bdl_notebooks --sys-prefix
+   rm -rf master 
+   #jupyter nbextension install --py bdl_notebooks --sys-prefix && \
+   #jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
+   #jupyter serverextension enable --py bdl_notebooks --sys-prefix
    
 
 
