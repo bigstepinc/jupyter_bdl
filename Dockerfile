@@ -66,9 +66,9 @@ RUN $CONDA_DIR/bin/conda install --yes \
     
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
 
-RUN $CONDA_DIR/bin/conda install -c conda-forge nb_conda
-RUN $CONDA_DIR/bin/python -m nb_conda_kernels.install --disable --prefix=$CONDA_DIR && \
-    $CONDA_DIR/bin/conda clean -yt
+#RUN $CONDA_DIR/bin/conda install -c conda-forge nb_conda
+#RUN $CONDA_DIR/bin/python -m nb_conda_kernels.install --disable --prefix=$CONDA_DIR && \
+#    $CONDA_DIR/bin/conda clean -yt
 
 #Install Scala Spark kernel
 ENV SBT_VERSION 0.13.11
@@ -83,7 +83,12 @@ RUN cd /root && $CONDA_DIR/bin/conda install --yes \
     'scipy' \
     'seaborn' \
     'scikit-learn' && \
+    'python=3.6.0' && \
     $CONDA_DIR/bin/conda clean -yt
+
+#Install ray and modin
+RUN pip install modin && \
+   pip install ray
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
