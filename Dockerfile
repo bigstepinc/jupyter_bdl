@@ -83,12 +83,13 @@ RUN cd /root && $CONDA_DIR/bin/conda install --yes \
     'scipy' \
     'seaborn' \
     'scikit-learn' && \
-    'python=3.6.0' && \
+    'python==3.6.0' && \
     $CONDA_DIR/bin/conda clean -yt
 
 #Install ray and modin
 RUN pip install modin && \
-   pip install ray
+   pip install xgboost && \
+   pip install lightgbm
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
