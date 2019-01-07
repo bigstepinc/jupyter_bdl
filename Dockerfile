@@ -83,8 +83,9 @@ RUN cd /root && $CONDA_DIR/bin/conda install --yes \
     'scipy' \
     'seaborn' \
     'scikit-learn' && \
-    'python==3.6.7' && \
     $CONDA_DIR/bin/conda clean -yt
+    
+RUN conda install 'python==3.6.7' 
 
 #Install ray and modin
 RUN pip install modin && \
