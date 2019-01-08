@@ -1,9 +1,11 @@
 #!/bin/bash
 
-export JAVA_HOME="/opt/jdk1.8.0_191/"                                                                                                                               
-export PATH="$PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"
-export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"
-export JAVA_OPTS="-Dsun.security.krb5.debug=true -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=256M"
+echo 'export SPARK_HOME="/opt/spark-2.4.0-bin-hadoop2.7"'>> ~/.bashrc
+echo 'export BDL_HOME="/opt/bigstepdatalake-0.9.1"' >> ~/.bashrc
+echo 'export JAVA_HOME="/opt/jdk1.8.0_191/"' >> ~/.bashrc                                                                                                                            
+echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
+echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
+echo 'export JAVA_OPTS="-Dsun.security.krb5.debug=true -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=256M"' >> ~/.bashrc
 
 if [ "$SPARK_UI_PORT" == "" ]; then
   SPARK_UI_PORT=4040
@@ -30,6 +32,20 @@ fi
 	#echo "c.Examples.user_id = \'$USER_ID\'" >> /root/.jupyter/jupyter_notebook_config.py
 	#echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
 #fi
+
+#Configure core-site.xml based on the configured authentication method
+if [ "$AUTH_METHOD" == "apikey" ]; then
+	mv $SPARK_HOME/conf/core-site.xml.apiKey $SPARK_HOME/conf/core-site.xml
+	if [ "$AUTH_APIKEY" != "" ]; then
+		sed "s/AUTH_APIKEY/$AUTH_APIKEY/" $SPARK_HOME/conf/core-site.xml >> $SPARK_HOME/conf/core-site.xml.tmp && \
+		mv $SPARK_HOME/conf/core-site.xml.tmp $SPARK_HOME/conf/core-site.xml
+	fi
+	if [ "$API_ENDPOINT" != "" ]; then
+		sed "s/API_ENDPOINT/${API_ENDPOINT//\//\\/}/" $SPARK_HOME/conf/core-site.xml >> $SPARK_HOME/conf/core-site.xml.tmp && \
+		mv $SPARK_HOME/conf/core-site.xml.tmp $SPARK_HOME/conf/core-site.xml
+	fi
+	cp $SPARK_HOME/conf/core-site.xml $BDL_HOME/conf/core-site.xml
+fi
 
 if [ "$MODE" == "" ]; then
 MODE=$1
