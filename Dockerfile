@@ -91,7 +91,8 @@ RUN conda install 'python==3.6.7'
 #Install ray and modin
 RUN pip install modin && \
    pip install xgboost && \
-   pip install lightgbm
+   pip install lightgbm && \
+   pip install py4j
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
