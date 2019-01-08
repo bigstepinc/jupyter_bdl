@@ -4,6 +4,7 @@ ADD entrypoint.sh /
 ADD password.py /opt/
 ADD env.sh /opt/
 ADD handlers.py /opt/
+ADD core-site.xml.apiKey $SPARK_HOME/conf/
 
 RUN apt-get update -y
 
