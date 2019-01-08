@@ -1,0 +1,34 @@
+<configuration>
+    <property>
+        <name>fs.bdl.impl</name>
+        <value>com.bigstep.bdl.BDLFileSystem</value>
+    </property>
+
+    <property>
+        <name>fs.bdl.auth.apiKey</name>
+        <value>AUTH_APIKEY</value>
+    </property>
+    
+    <property>
+        <name>fs.bdl.api.endpoint</name>
+        <value>API_ENDPOINT</value>
+    </property>
+
+    <!--MOCK ZONE-->
+    <property>
+        <name>bdl.conf.mock.audit.enabled</name>
+        <value>AUDIT_ENABLE</value>
+    </property>
+
+    <!-- This way of setting the userId is highly unsafe and was put here only for testing purposes. -->
+    <property>
+        <name>bdl.conf.mock.audit.userId</name>
+        <value>AUDIT_MOCK_USERID</value>
+    </property>
+
+    <property>
+        <name>bdl.conf.mock.enabled</name>
+        <value>false</value>
+    </property>
+    <!--/MOCK ZONE-->
+</configuration>
