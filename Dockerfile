@@ -145,10 +145,10 @@ RUN cd /tmp && \
     wget http://repo.bigstepcloud.com/bigstep/datalab/toree-assembly-0.3.0.dev1-incubating-SNAPSHOT.jar -O /opt/toree-kernel/lib/toree-assembly-0.3.0.dev1-incubating-SNAPSHOT.jar
 
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.9.1-bin.tar.gz  && \
-    tar -xzvf bigstepdatalake-0.9.1-bin.tar.gz && \
-    rm -rf /opt/bigstepdatalake-0.9.1-bin.tar.gz && \
-    export PATH=$PATH:/opt/bigstepdatalake-0.9.1/bin
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.1-bin.tar.gz  && \
+    tar -xzvf bigstepdatalake-0.10.1-bin.tar.gz && \
+    rm -rf /opt/bigstepdatalake-0.10.1-bin.tar.gz && \
+    export PATH=$PATH:/opt/bigstepdatalake-0.10.1/bin
     
 RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Scala%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
