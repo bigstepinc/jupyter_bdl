@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'export SPARK_HOME="/opt/spark-2.4.0-bin-hadoop2.7"'>> ~/.bashrc
-echo 'export BDL_HOME="/opt/bigstepdatalake-0.9.1"' >> ~/.bashrc
+echo 'export BDL_HOME="/opt/bigstepdatalake-0.10.1"' >> ~/.bashrc
 echo 'export JAVA_HOME="/opt/jdk1.8.0_191/"' >> ~/.bashrc                                                                                                                            
 echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
