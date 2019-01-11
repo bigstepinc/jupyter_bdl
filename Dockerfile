@@ -154,19 +154,24 @@ RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Sta
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
 
 # Install bdl_notebooks
-#RUN git clone https://bitbucket.org/Costina/bdl_client/src/master/ && \
-#   cd master && \
-#   pip install . && \
-#   cd .. && \
-#   rm -rf master && \
-#   git clone https://bitbucket.org/Costina/bdl_notebooks/src/master/ && \
-#   cd master && \
-#   pip install . && \
-#   cd .. && \
-#   rm -rf master 
-   #jupyter nbextension install --py bdl_notebooks --sys-prefix && \
-   #jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-   #jupyter serverextension enable --py bdl_notebooks --sys-prefix
+RUN cd /opt && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bdl_client_python_0.1.tar.gz && \
+    tar -xzvf bdl_client_python_0.1.tar.gz && \
+    rm -rf /opt/bdl_client_python_0.1.tar.gz && \
+    cd ./master && \
+    pip install . && \
+    cd .. && \
+    rm -rf master && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module_0.1.tar.gz && \
+    tar -xzvf jupyter_shared_notebook_module_0.1.tar.gz && \
+    rm -rf /opt/jupyter_shared_notebook_module_0.1.tar.gz && \
+    cd ./master && \
+    pip install . && \
+    cd .. && \
+    rm -rf master && \
+    jupyter nbextension install --py bdl_notebooks --sys-prefix && \
+    jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
+   jupyter serverextension enable --py bdl_notebooks --sys-prefix
    
 
 
