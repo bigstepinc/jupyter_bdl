@@ -28,11 +28,11 @@ if [ "$NOTEBOOK_DIR" != "" ]; then
 fi
 
 #Commented because of /api/v1/notebooks connection errors
-#if [ "$USER_ID" != "" ]; then
-	#echo "c = get_config()" >> /root/.jupyter/jupyter_notebook_config.py
-	#echo "c.Examples.user_id = \'$USER_ID\'" >> /root/.jupyter/jupyter_notebook_config.py
-	#echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
-#fi
+if [ "$DATALAKE_NAME" != "" ]; then
+	echo "c = get_config()" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.Examples.datalake_name = \'$DATALAKE_NAME\'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
+fi
 
 #Configure core-site.xml based on the configured authentication method
 if [ "$AUTH_METHOD" == "apikey" ]; then
