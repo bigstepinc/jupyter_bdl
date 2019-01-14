@@ -67,10 +67,6 @@ RUN $CONDA_DIR/bin/conda install --yes \
     
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
 
-#RUN $CONDA_DIR/bin/conda install -c conda-forge nb_conda
-#RUN $CONDA_DIR/bin/python -m nb_conda_kernels.install --disable --prefix=$CONDA_DIR && \
-#    $CONDA_DIR/bin/conda clean -yt
-
 #Install Scala Spark kernel
 ENV SBT_VERSION 0.13.11
 ENV SBT_HOME /usr/local/sbt
@@ -131,19 +127,6 @@ RUN apt-get install -y make
 
 RUN pip install nose pillow
 
-RUN cd /tmp && \
-    wget "http://repo.bigstepcloud.com/bigstep/datalab/sbt-0.13.11.tgz" -O /tmp/sbt-0.13.11.tgz && \
-    tar -xvf /tmp/sbt-0.13.11.tgz -C /usr/local && \
-    echo -ne "- with sbt $SBT_VERSION\n" >> /root/.built && \
-    git clone https://github.com/apache/incubator-toree.git && \
-    cd incubator-toree && \
-    git checkout cc8bf2a561d87c289981298ab594d2ea851ad1ed && \
-    make dist SHELL=/bin/bash APACHE_SPARK_VERSION=2.3.0 SCALA_VERSION=2.11 && \
-    mv /tmp/incubator-toree/dist/toree /opt/toree-kernel && \
-    chmod +x /opt/toree-kernel && \
-    rm -rf /tmp/incubator-toree && \
-    wget http://repo.bigstepcloud.com/bigstep/datalab/toree-assembly-0.3.0.dev1-incubating-SNAPSHOT.jar -O /opt/toree-kernel/lib/toree-assembly-0.3.0.dev1-incubating-SNAPSHOT.jar
-
 RUN cd /opt && \
     wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.1-bin.tar.gz  && \
     tar -xzvf bigstepdatalake-0.10.1-bin.tar.gz && \
@@ -152,24 +135,7 @@ RUN cd /opt && \
     
 RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Scala%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
-
-# Install bdl_notebooks
-#RUN git clone https://bitbucket.org/Costina/bdl_client/src/master/ && \
-#   cd master && \
-#   pip install . && \
-#   cd .. && \
-#   rm -rf master && \
-#   git clone https://bitbucket.org/Costina/bdl_notebooks/src/master/ && \
-#   cd master && \
-#   pip install . && \
-#   cd .. && \
-#   rm -rf master 
-   #jupyter nbextension install --py bdl_notebooks --sys-prefix && \
-   #jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-   #jupyter serverextension enable --py bdl_notebooks --sys-prefix
-   
-
-
+    
 #Install SparkMonitor extension
 #RUN git clone https://github.com/krishnan-r/sparkmonitor && \
 #   cd sparkmonitor/extension/ && \
