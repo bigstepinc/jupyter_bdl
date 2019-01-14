@@ -4,7 +4,6 @@ ADD entrypoint.sh /
 ADD password.py /opt/
 ADD env.sh /opt/
 ADD handlers.py /opt/
-ADD core-site.xml.apiKey $SPARK_HOME/conf/
 
 RUN apt-get update -y
 
@@ -42,9 +41,7 @@ ENV R_LIBS_USER $SPARK_HOME/R/lib:/opt/conda/envs/ir/lib/R/library:/opt/conda/li
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 
 ENV PATH $PATH:/$SPARK_HOME/bin/
-
-
-#ENV R_LIBS_USER /opt/conda/envs/ir/lib/R/library:/opt/conda/lib/R/library
+ADD core-site.xml.apiKey $SPARK_HOME/conf/
 
 # Create additional files in the DataLake
 RUN mkdir -p /user && mkdir -p /user/notebooks && mkdir -p /user/datasets && chmod 777 /entrypoint.sh
