@@ -67,10 +67,6 @@ RUN $CONDA_DIR/bin/conda install --yes \
     
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
 
-#RUN $CONDA_DIR/bin/conda install -c conda-forge nb_conda
-#RUN $CONDA_DIR/bin/python -m nb_conda_kernels.install --disable --prefix=$CONDA_DIR && \
-#    $CONDA_DIR/bin/conda clean -yt
-
 #Install Scala Spark kernel
 ENV SBT_VERSION 0.13.11
 ENV SBT_HOME /usr/local/sbt
@@ -96,53 +92,20 @@ RUN pip install modin && \
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
-#RUN CONDA_VERBOSE=3 $CONDA_DIR/bin/conda create --yes -p $CONDA_DIR/envs/python3 python=3.5 ipython ipywidgets pandas matplotlib scipy seaborn scikit-learn
-#RUN bash -c '. activate $CONDA_DIR/envs/python3 && \
- #   python -m ipykernel.kernelspec --prefix=/opt/conda && \
- #   . deactivate'
-    
-#RUN wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O /root/jq-linux64
-
-#RUN chmod +x /root/jq-linux64
-#RUN /root/jq-linux64 --arg v "$CONDA_DIR/envs/python3/bin/python"         '.["env"]["PYSPARK_PYTHON"]=$v' /opt/conda/share/jupyter/kernels/python3/kernel.json > /tmp/kernel.json &&   \
-#    mv /tmp/kernel.json /opt/conda/share/jupyter/kernels/python3/kernel.json
-
-#Install R kernel and set up environment
-#RUN $CONDA_DIR/bin/conda config --add channels r
-#RUN $CONDA_DIR/bin/conda install --yes -c r r-essentials r-base r-irkernel r-irdisplay r-ggplot2 r-repr r-rcurl
-#RUN $CONDA_DIR/bin/conda create --yes  -n ir -c r r-essentials r-base r-irkernel r-irdisplay r-ggplot2 r-repr r-rcurl
-
 #Configure Scala kernel
 RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
 COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
 RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/datalab_getting_started_in_scala__4.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
- #  wget http://repo.bigstepcloud.com/bigstep/datalab/DataLab%2BGetting%2BStarted%2Bin%2BR%20%281%29.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ R.ipynb && \
    wget http://repo.bigstepcloud.com/bigstep/datalab/DataLab%2BGetting%2BStarted%2Bin%2BPython%20%283%29.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb && \
    wget http://repo.bigstepcloud.com/bigstep/datalab/logo.png -O logo.png && \
- #  cp logo.png $CONDA_DIR/envs/python3/doc/global/template/images/logo.png && \
- #  cp logo.png $CONDA_DIR/envs/python3/lib/python3.5/site-packages/notebook/static/base/images/logo.png && \
    cp logo.png $CONDA_DIR/doc/global/template/images/logo.png && \
    rm -rf logo.png 
    
-#RUN apt-get install -y libcairo2-dev  python3-cairo-dev
 RUN apt-get install -y make
 
 RUN pip install nose pillow
-
-RUN cd /tmp && \
-    wget "http://repo.bigstepcloud.com/bigstep/datalab/sbt-0.13.11.tgz" -O /tmp/sbt-0.13.11.tgz && \
-    tar -xvf /tmp/sbt-0.13.11.tgz -C /usr/local && \
-    echo -ne "- with sbt $SBT_VERSION\n" >> /root/.built && \
-    git clone https://github.com/apache/incubator-toree.git && \
-    cd incubator-toree && \
-    git checkout cc8bf2a561d87c289981298ab594d2ea851ad1ed && \
-    make dist SHELL=/bin/bash APACHE_SPARK_VERSION=2.3.0 SCALA_VERSION=2.11 && \
-    mv /tmp/incubator-toree/dist/toree /opt/toree-kernel && \
-    chmod +x /opt/toree-kernel && \
-    rm -rf /tmp/incubator-toree && \
-    wget http://repo.bigstepcloud.com/bigstep/datalab/toree-assembly-0.3.0.dev1-incubating-SNAPSHOT.jar -O /opt/toree-kernel/lib/toree-assembly-0.3.0.dev1-incubating-SNAPSHOT.jar
 
 RUN cd /opt && \
     wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.1-bin.tar.gz  && \
@@ -155,20 +118,20 @@ RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Sta
 
 # Install bdl_notebooks
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bdl_client_python_0.1.tar.gz && \
-    tar -xzvf bdl_client_python_0.1.tar.gz && \
-    rm -rf /opt/bdl_client_python_0.1.tar.gz && \
-    cd ./master && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bdl_client_python.tar.gz && \
+    tar -xzvf bdl_client_python.tar.gz && \
+    rm -rf /opt/bdl_client_python.tar.gz && \
+    cd ./bdl_client_python && \
     pip install . && \
     cd .. && \
-    rm -rf master && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module_0.1.tar.gz && \
-    tar -xzvf jupyter_shared_notebook_module_0.1.tar.gz && \
-    rm -rf /opt/jupyter_shared_notebook_module_0.1.tar.gz && \
-    cd ./master && \
+    rm -rf bdl_client_python && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module.tar.gz && \
+    tar -xzvf jupyter_shared_notebook_module.tar.gz && \
+    rm -rf /opt/jupyter_shared_notebook_module.tar.gz && \
+    cd ./jupyter_shared_notebook_module && \
     pip install . && \
     cd .. && \
-    rm -rf master && \
+    rm -rf jupyter_shared_notebook_module && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
    jupyter serverextension enable --py bdl_notebooks --sys-prefix
