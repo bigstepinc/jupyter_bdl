@@ -12,10 +12,6 @@ if [ "$SPARK_UI_PORT" == "" ]; then
   SPARK_UI_PORT=4040
 fi
 
-if [ "$USER_ID" == "" ]; then
-  USER_ID=1
-fi
-
 if [ "$NOTEBOOK_DIR" != "" ]; then
 	export ESCAPED_PERSISTENT_NB_DIR="${NOTEBOOK_DIR//\//\\/}"
 	
