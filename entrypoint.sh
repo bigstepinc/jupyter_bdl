@@ -63,66 +63,6 @@ if [ "$MODE" == "jupyter" ]; then
 	sed "s/#c.NotebookApp.password = ''/c.NotebookApp.password = \'$pass\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
 	mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
 
-	if [ "$GIT_REPO_NAME" != "" ]; then
-		if [ "$GITHUB_COMMIT_DIR" == "" ]; then 
-			export GITHUB_COMMIT_DIR=/opt
-		fi
-		if [ "$GIT_PARENT_DIR" == "" ]; then 
-			export GIT_PARENT_DIR=$PERSISTENT_NB_DIR
-		fi
-		if [ "$GIT_BRANCH_NAME" == "" ]; then 
-			export GIT_BRANCH_NAME=master
-		fi
-		if [[ "$GIT_USER" != "" && "$GIT_EMAIL" != "" && "$GITHUB_ACCESS_TOKEN" != "" ]]; then 
-			if [ "$GIT_USER_UPSTREAM" == "" ]; then 
-				export GIT_USER_UPSTREAM=$GIT_USER
-			fi
-		
-			pip install git+https://github.com/sat28/githubcommit.git
-			jupyter serverextension enable --py githubcommit
-			jupyter nbextension install --py githubcommit
-			jupyter nbextension enable githubcommit --py
-		
-			cd $GITHUB_COMMIT_DIR && git clone https://github.com/sat28/githubcommit
-			rm -rf $GITHUB_COMMIT_DIR/githubcommit/env.sh
-			mv /opt/env.sh $GITHUB_COMMIT_DIR/githubcommit/
-		
-			sed "s/GITHUB_COMMIT_DIR=/GITHUB_COMMIT_DIR=$GITUB_COMMIT_DIR/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GIT_PARENT_DIR=/GIT_PARENT_DIR=$GIT_PARENT_DIR/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GIT_REPO_NAME=/GIT_REPO_NAME=$GIT_REPO_NAME/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GIT_BRANCH_NAME=/GIT_BRANCH_NAME=$GIT_BRANCH_NAME/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GIT_USER=/GIT_USER=$GIT_USER/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GIT_EMAIL=/GIT_EMAIL=$GIT_EMAIL/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GITHUB_ACCESS_TOKEN=/GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			sed "s/GIT_USER_UPSTREAM=/GIT_USER_UPSTREAM=$GIT_USER_UPSTREAM/" $GITHUB_COMMIT_DIR/githubcommit/env.sh >> $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp && \
-			mv $GITHUB_COMMIT_DIR/githubcommit/env.sh.tmp $GITHUB_COMMIT_DIR/githubcommit/env.sh
-		
-			git config --global user.email "$GIT_EMAIL"
-			git config --global user.name "$GIT_USER"
-		
-			source $GITHUB_COMMIT_DIR/githubcommit/env.sh
-			cd $GIT_PARENT_DIR/$GIT_REPO_NAME && \
-			git config remote.master.url https://$GIT_USER:$GIT_ACCESS_TOKEN@github.com/$GIT_USER/$GIT_REPO_NAME.git
-		
-			rm -rf $CONDA_DIR/lib/python2.7/site-packages/githubcommit/handlers.py
-			mv /opt/env.sh $CONDA_DIR/lib/python3/site-packages/githubcommit/
-		fi
-	fi
-
 	#Install sparkmonitor extension
 	export SPARKMONITOR_UI_HOST=$SPARK_PUBLIC_DNS
 	export SPARKMONITOR_UI_PORT=$SPARK_UI_PORT
