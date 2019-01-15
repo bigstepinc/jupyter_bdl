@@ -42,6 +42,7 @@ ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 
 ENV PATH $PATH:/$SPARK_HOME/bin/
 ADD core-site.xml.apiKey $SPARK_HOME/conf/
+ADD log4j2.xml.default $SPARK_HOME/conf/
 
 # Create additional files in the DataLake
 RUN mkdir -p /user && mkdir -p /user/notebooks && mkdir -p /user/datasets && chmod 777 /entrypoint.sh

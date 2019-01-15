@@ -45,6 +45,9 @@ if [ "$AUTH_METHOD" == "apikey" ]; then
 	cp $SPARK_HOME/conf/core-site.xml $BDL_HOME/conf/core-site.xml
 fi
 
+#Configure log4j2 for bdlcl logs
+mv $SPARK_HOME/conf/log4j2.xml.default $SPARK_HOME/conf/log4j2.xml
+
 if [ "$MODE" == "" ]; then
 MODE=$1
 fi
