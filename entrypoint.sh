@@ -68,6 +68,7 @@ if [ "$MODE" == "jupyter" ]; then
 	export SPARKMONITOR_UI_PORT=$SPARK_UI_PORT
 fi
 
+rm -rf /opt/spark-2.4.0-bin-hadoop2.7/jars/guava-14.0.1.jar
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
