@@ -14,20 +14,20 @@ RUN apt-get install -y nodejs
 RUN npm install yarn -g
 
 # Install Java 8
-ENV JAVA_HOME /opt/jdk1.8.0_191
-ENV PATH $PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin:/etc/alternatives:/var/lib/dpkg/alternatives
+ENV JAVA_HOME /opt/jdk1.8.0_202
+ENV PATH $PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/etc/alternatives:/var/lib/dpkg/alternatives
 
-RUN cd /opt && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz" &&\
-   tar xzf jdk-8u191-linux-x64.tar.gz && rm -rf jdk-8u191-linux-x64.tar.gz
+RUN cd /opt && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn-pub/java/jdk/8u202-b08/1961070e4c9b4e26a04e7f5a083f551e/jdk-8u202-linux-x64.tar.gz" &&\
+   tar xzf jdk-8u202-linux-x64.tar.gz && rm -rf jdk-8u202-linux-x64.tar.gz
 
-RUN echo 'export JAVA_HOME="/opt/jdk1.8.0_191"' >> ~/.bashrc && \
-    echo 'export PATH="$PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin"' >> ~/.bashrc && \
-    bash ~/.bashrc && cd /opt/jdk1.8.0_191/ && update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_191/bin/java 1
+RUN echo 'export JAVA_HOME="/opt/jdk1.8.0_202"' >> ~/.bashrc && \
+    echo 'export PATH="$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin"' >> ~/.bashrc && \
+    bash ~/.bashrc && cd /opt/jdk1.8.0_202/ && update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_202/bin/java 1
     
 #Add Java Security Policies
 RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
    unzip jce_policy-8.zip
-RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk1.8.0_191/jre/lib/security/ && cp UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk1.8.0_191/jre/lib/security/
+RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk1.8.0_202/jre/lib/security/ && cp UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk1.8.0_202/jre/lib/security/
 RUN rm -rf UnlimitedJCEPolicyJDK8
 
 # Install Spark 2.4.0
@@ -37,8 +37,6 @@ RUN cd /opt && wget https://www-eu.apache.org/dist/spark/spark-2.4.0/spark-2.4.0
    
 # Spark pointers for Jupyter Notebook
 ENV SPARK_HOME /opt/spark-2.4.0-bin-hadoop2.7
-ENV R_LIBS_USER $SPARK_HOME/R/lib:/opt/conda/envs/ir/lib/R/library:/opt/conda/lib/R/library
-ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 
 ENV PATH $PATH:/$SPARK_HOME/bin/
 ADD core-site.xml.apiKey $SPARK_HOME/conf/
@@ -64,11 +62,6 @@ RUN $CONDA_DIR/bin/conda install --yes \
     $CONDA_DIR/bin/conda clean -yt
     
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
-
-#Install Scala Spark kernel
-ENV SBT_VERSION 0.13.11
-ENV SBT_HOME /usr/local/sbt
-ENV PATH ${PATH}:${SBT_HOME}/bin
     
 #Install Python3 packages
 RUN cd /root && $CONDA_DIR/bin/conda install --yes \
@@ -106,34 +99,34 @@ RUN apt-get install -y make
 RUN pip install nose pillow
 
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.1-bin.tar.gz  && \
-    tar -xzvf bigstepdatalake-0.10.1-bin.tar.gz && \
-    rm -rf /opt/bigstepdatalake-0.10.1-bin.tar.gz && \
-    cp /opt/bigstepdatalake-0.10.1/lib/* $SPARK_HOME/jars/ && \
-    export PATH=$PATH:/opt/bigstepdatalake-0.10.1/bin
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.3-bin.tar.gz  && \
+    tar -xzvf bigstepdatalake-0.10.3-bin.tar.gz && \
+    rm -rf /opt/bigstepdatalake-0.10.3-bin.tar.gz && \
+    cp /opt/bigstepdatalake-0.10.3/lib/* $SPARK_HOME/jars/ && \
+    export PATH=/opt/bigstepdatalake-0.10.3/bin:$PATH
     
 RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Scala%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
 
 # Install bdl_notebooks
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bdl_client_python.tar.gz && \
-    tar -xzvf bdl_client_python.tar.gz && \
-    rm -rf /opt/bdl_client_python.tar.gz && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bdl_client_python_1.0.0.tar.gz && \
+    tar -xzvf bdl_client_python_1.0.0.tar.gz && \
+    rm -rf /opt/bdl_client_python_1.0.0.tar.gz && \
     cd ./bdl_client_python && \
     pip install . && \
     cd .. && \
     rm -rf bdl_client_python && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module.tar.gz && \
-    tar -xzvf jupyter_shared_notebook_module.tar.gz && \
-    rm -rf /opt/jupyter_shared_notebook_module.tar.gz && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module_0.1.tar.gz && \
+    tar -xzvf jupyter_shared_notebook_module_0.1.tar.gz && \
+    rm -rf /opt/jupyter_shared_notebook_module_0.1.tar.gz && \
     cd ./jupyter_shared_notebook_module && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_shared_notebook_module && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-   jupyter serverextension enable --py bdl_notebooks --sys-prefix
+    jupyter serverextension enable --py bdl_notebooks --sys-prefix
    
 
 
