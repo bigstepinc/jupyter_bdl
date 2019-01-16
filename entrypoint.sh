@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo 'export SPARK_HOME="/opt/spark-2.4.0-bin-hadoop2.7"'>> ~/.bashrc
-echo 'export BDL_HOME="/opt/bigstepdatalake-0.10.1"' >> ~/.bashrc
-echo 'export JAVA_HOME="/opt/jdk1.8.0_191/"' >> ~/.bashrc                                                                                                                            
-echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_191/bin:/opt/jdk1.8.0_191/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
+echo 'export BDL_HOME="/opt/bigstepdatalake-0.10.3"' >> ~/.bashrc
+echo 'export JAVA_HOME="/opt/jdk1.8.0_202/"' >> ~/.bashrc                                                                                                                            
+echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
 echo 'export JAVA_OPTS="-Dsun.security.krb5.debug=true -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=256M"' >> ~/.bashrc
 bash >> ~/.bashrc 
@@ -24,9 +24,9 @@ if [ "$NOTEBOOK_DIR" != "" ]; then
 fi
 
 #Commented because of /api/v1/notebooks connection errors
-if [ "$DATAPOOL_NAME" != "" ]; then
+if [ "$DATALAKE_ID" != "" ]; then
 	echo "c = get_config()" >> /root/.jupyter/jupyter_notebook_config.py
-	echo "c.Examples.datapool_name = '$DATAPOOL_NAME'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.Examples.datalake_id = '$DATALAKE_ID'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
 fi
@@ -54,8 +54,8 @@ fi
 
 if [ "$MODE" == "jupyter" ]; then 
 	# Change the Home Icon 
-	sed "s/<i class=\"fa fa-home\"><\/i>/\/user/" /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html >> /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html.tmp
-	mv /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html.tmp /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html
+	#sed "s/<i class=\"fa fa-home\"><\/i>/\/user/" /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html >> /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html.tmp
+	#mv /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html.tmp /opt/conda/envs/python3/lib/python3.5/site-packages/notebook/templates/tree.html
 	
 	# export NOTEBOOK_PASSWORD=$(cat $NOTEBOOK_SECRETS_PATH/NOTEBOOK_PASSWORD)
 
@@ -64,8 +64,8 @@ if [ "$MODE" == "jupyter" ]; then
 	mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
 
 	#Install sparkmonitor extension
-	export SPARKMONITOR_UI_HOST=$SPARK_PUBLIC_DNS
-	export SPARKMONITOR_UI_PORT=$SPARK_UI_PORT
+	#export SPARKMONITOR_UI_HOST=$SPARK_PUBLIC_DNS
+	#export SPARKMONITOR_UI_PORT=$SPARK_UI_PORT
 fi
 
 rm -rf /opt/spark-2.4.0-bin-hadoop2.7/jars/guava-14.0.1.jar
