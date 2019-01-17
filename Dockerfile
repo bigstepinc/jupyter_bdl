@@ -101,11 +101,11 @@ RUN apt-get install -y make
 RUN pip install nose pillow
 
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.3-bin.tar.gz  && \
-    tar -xzvf bigstepdatalake-0.10.3-bin.tar.gz && \
-    rm -rf /opt/bigstepdatalake-0.10.3-bin.tar.gz && \
-    cp /opt/bigstepdatalake-0.10.3/lib/* $SPARK_HOME/jars/ && \
-    export PATH=/opt/bigstepdatalake-0.10.3/bin:$PATH
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.4-bin.tar.gz  && \
+    tar -xzvf bigstepdatalake-0.10.4-bin.tar.gz && \
+    rm -rf /opt/bigstepdatalake-0.10.4-bin.tar.gz && \
+    cp /opt/bigstepdatalake-0.10.4/lib/* $SPARK_HOME/jars/ && \
+    export PATH=/opt/bigstepdatalake-0.10.4/bin:$PATH
     
 RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Scala%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
     wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
