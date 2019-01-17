@@ -79,7 +79,9 @@ RUN conda install 'python==3.6.7'
 RUN pip install modin && \
    pip install xgboost && \
    pip install lightgbm && \
-   pip install py4j
+   pip install py4j && \
+   pip install plotly && \
+   pip install pyspark
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
@@ -128,8 +130,6 @@ RUN cd /opt && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix
    
-
-
 #Install SparkMonitor extension
 #RUN git clone https://github.com/krishnan-r/sparkmonitor && \
 #   cd sparkmonitor/extension/ && \
