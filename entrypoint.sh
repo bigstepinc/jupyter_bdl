@@ -26,7 +26,7 @@ fi
 #Commented because of /api/v1/notebooks connection errors
 if [ "$DATALAKE_ID" != "" ]; then
 	echo "c = get_config()" >> /root/.jupyter/jupyter_notebook_config.py
-	echo "c.Examples.datalake_id = '$DATALAKE_ID'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.Examples.datalake_id = $DATALAKE_ID" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
