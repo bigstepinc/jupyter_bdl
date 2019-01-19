@@ -119,9 +119,9 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf bdl_client_python && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module_0.1.tar.gz && \
-    tar -xzvf jupyter_shared_notebook_module_0.1.tar.gz && \
-    rm -rf /opt/jupyter_shared_notebook_module_0.1.tar.gz && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module_0.2.tar.gz && \
+    tar -xzvf jupyter_shared_notebook_module_0.2.tar.gz && \
+    rm -rf /opt/jupyter_shared_notebook_module_0.2.tar.gz && \
     cd ./jupyter_shared_notebook_module && \
     pip install . && \
     cd .. && \
