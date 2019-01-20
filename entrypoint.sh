@@ -6,7 +6,7 @@ echo 'export JAVA_HOME="/opt/jdk1.8.0_202/"' >> ~/.bashrc
 echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
 echo 'export JAVA_OPTS="-Dsun.security.krb5.debug=true -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=256M"' >> ~/.bashrc
-source >> ~/.bashrc 
+source ~/.bashrc 
 
 if [ "$SPARK_UI_PORT" == "" ]; then
   SPARK_UI_PORT=4040
