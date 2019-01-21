@@ -85,16 +85,8 @@ RUN pip install modin && \
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
-#Configure Scala kernel
-RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
-COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
-
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
-RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/datalab_getting_started_in_scala__4.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
-   wget http://repo.bigstepcloud.com/bigstep/datalab/DataLab%2BGetting%2BStarted%2Bin%2BPython%20%283%29.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb && \
-   wget http://repo.bigstepcloud.com/bigstep/datalab/logo.png -O logo.png && \
-   cp logo.png $CONDA_DIR/doc/global/template/images/logo.png && \
-   rm -rf logo.png 
+RUN wget http://repo.bigstepcloud.com/bigstep/datalab/DataLab%2BGetting%2BStarted%2Bin%2BPython%20%283%29.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb 
    
 RUN apt-get install -y make
 
@@ -107,8 +99,7 @@ RUN cd /opt && \
     cp /opt/bigstepdatalake-0.10.4/lib/* $SPARK_HOME/jars/ && \
     export PATH=/opt/bigstepdatalake-0.10.4/bin:$PATH
     
-RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Scala%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Scala.ipynb && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
+RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
 
 # Install bdl_notebooks
 RUN cd /opt && \
@@ -130,20 +121,6 @@ RUN cd /opt && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix
    
-#Install SparkMonitor extension
-#RUN git clone https://github.com/krishnan-r/sparkmonitor && \
-#   cd sparkmonitor/extension/ && \
-#   yarn install && \
-#   yarn run webpack && \
-#   cd scalalistener/ && \
-#   sbt package && \
-#   cd .. 
-#   pip install -e . 
-#   jupyter nbextension install sparkmonitor --py --user --symlink && \
-#   jupyter nbextension enable sparkmonitor --py --user  && \
-#   jupyter serverextension enable --py --user sparkmonitor && \
-#   ipython profile create && echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
-    
 #        Jupyter 
 EXPOSE   8888     
 
