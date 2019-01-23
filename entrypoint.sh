@@ -66,6 +66,9 @@ rm -rf /opt/spark-2.4.0-bin-hadoop2.7/jars/guava-14.0.1.jar
 rm -rf /usr/bin/python
 ln -s /opt/conda/bin/python3.6 /usr/bin/python
 
+rm -rf /opt/bigstepdatalake-0.10.4/conf/core-site.xml
+cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.10.4/conf/
+
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
 else
