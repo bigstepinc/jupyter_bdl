@@ -86,7 +86,7 @@ RUN pip install modin && \
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
-RUN wget http://repo.bigstepcloud.com/bigstep/datalab/DataLab%2BGetting%2BStarted%2Bin%2BPython%20%283%29.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb 
+RUN wget http://repo.uk.bigstepcloud.com/bigstep/bdl/Getting%20Started%20in%20Python3.ipynb -O /user/notebooks/Getting\ Started\ in\ Python3.ipynb 
    
 RUN apt-get install -y make
 
@@ -98,8 +98,6 @@ RUN cd /opt && \
     rm -rf /opt/bigstepdatalake-0.10.4-bin.tar.gz && \
     cp /opt/bigstepdatalake-0.10.4/lib/* $SPARK_HOME/jars/ && \
     export PATH=/opt/bigstepdatalake-0.10.4/bin:$PATH
-    
-RUN wget http://repo.uk.bigstepcloud.com/bigstep/datalab/DataLab%20Getting%20Started%20in%20Python%202018.ipynb -O /user/notebooks/DataLab\ Getting\ Started\ in\ Python.ipynb
 
 # Install bdl_notebooks
 RUN cd /opt && \
