@@ -1,5 +1,10 @@
 <configuration>
     <property>
+        <name>fs.defaultFS</name>
+        <value>BDL_DEFAULT_PATH</value>
+    </property>
+    
+    <property>
         <name>fs.bdl.impl</name>
         <value>com.bigstep.bdl.BDLFileSystem</value>
     </property>
