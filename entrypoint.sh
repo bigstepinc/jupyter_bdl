@@ -6,7 +6,7 @@ echo 'export JAVA_HOME="/opt/jdk1.8.0_202/"' >> ~/.bashrc
 echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
 echo 'export JAVA_OPTS="-Dsun.security.krb5.debug=true -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=256M"' >> ~/.bashrc
-bash  ~/.bashrc 
+source  ~/.bashrc 
 
 if [ "$SPARK_UI_PORT" == "" ]; then
   SPARK_UI_PORT=4040
@@ -42,8 +42,13 @@ if [ "$AUTH_METHOD" == "apikey" ]; then
 		sed "s/API_ENDPOINT/${API_ENDPOINT//\//\\/}/" $SPARK_HOME/conf/core-site.xml >> $SPARK_HOME/conf/core-site.xml.tmp && \
 		mv $SPARK_HOME/conf/core-site.xml.tmp $SPARK_HOME/conf/core-site.xml
 	fi
+	if [ "$BDL_DEFAULT_PATH" != "" ]; then
+		sed "s/BDL_DEFAULT_PATH/${BDL_DEFAULT_PATH//\//\\/}/" $SPARK_HOME/conf/core-site.xml >> $SPARK_HOME/conf/core-site.xml.tmp && \
+		mv $SPARK_HOME/conf/core-site.xml.tmp $SPARK_HOME/conf/core-site.xml
+	fi
 	cp $SPARK_HOME/conf/core-site.xml $BDL_HOME/conf/core-site.xml
 fi
+
 
 #Configure log4j2 for bdlcl logs
 mv $SPARK_HOME/conf/log4j2.xml.default $SPARK_HOME/conf/log4j2.xml
