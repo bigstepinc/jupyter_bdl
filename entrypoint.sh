@@ -51,6 +51,7 @@ fi
 
 if [ "$SPARK_WAREHOUSE_DIR" != "" ]; then
 	echo "spark.sql.warehouse.dir=${SPARK_WAREHOUSE_DIR}" >> $SPARK_HOME/conf/spark-defaults.conf
+	echo "spark.sql.catalogImplementation=hive" >> $SPARK_HOME/conf/spark-defaults.conf
 fi
 
 if [ "$DB_TYPE" == "postgresql" ]; then
