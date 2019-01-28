@@ -41,6 +41,7 @@ ENV SPARK_HOME /opt/spark-2.4.0-bin-hadoop2.7
 ENV PATH $PATH:/$SPARK_HOME/bin/
 ADD core-site.xml.apiKey $SPARK_HOME/conf/
 ADD log4j2.xml.default $SPARK_HOME/conf/
+ADD hive-site.xml $SPARK_HOME/conf/
 
 # Create additional files in the DataLake
 RUN mkdir -p /user && mkdir -p /user/notebooks && mkdir -p /user/datasets && chmod 777 /entrypoint.sh
