@@ -49,6 +49,63 @@ if [ "$AUTH_METHOD" == "apikey" ]; then
 	cp $SPARK_HOME/conf/core-site.xml $BDL_HOME/conf/core-site.xml
 fi
 
+if [ "$SPARK_WAREHOUSE_DIR" != "" ]; then
+	echo "spark.sql.warehouse.dir=${SPARK_WAREHOUSE_DIR}" >> $SPARK_HOME/conf/spark-defaults.conf
+fi
+
+if [ "$DB_TYPE" == "postgresql" ]; then
+	# Add metadata support
+	if [ "$POSTGRES_HOSTNAME" != "" ]; then
+		sed "s/POSTGRES_HOSTNAME/$POSTGRES_HOSTNAME/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+	if [ "$POSTGRES_PORT" != "" ]; then
+		sed "s/POSTGRES_PORT/$POSTGRES_PORT/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+	
+	if [ "$DB_NAME" != "" ]; then
+		sed "s/SPARK_POSTGRES_DB/$DB_NAME/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+	if [ "$DB_USER" != "" ]; then
+		sed "s/SPARK_POSTGRES_USER/$DB_USER/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+
+	if [ "$DYNAMIC_PARTITION_VALUE" != "" ]; then
+		sed "s/DYNAMIC_PARTITION_VALUE/$DYNAMIC_PARTITION_VALUE/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+	if [ "$DYNAMIC_PARTITION_MODE" != "" ]; then
+		sed "s/DYNAMIC_PARTITION_MODE/$DYNAMIC_PARTITION_MODE/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+	if [ "$NR_MAX_DYNAMIC_PARTITIONS" != "" ]; then
+		sed "s/NR_MAX_DYNAMIC_PARTITIONS/$NR_MAX_DYNAMIC_PARTITIONS/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+	if [ "$MAX_DYNAMIC_PARTITIONS_PER_NODE" != "" ]; then
+		sed "s/MAX_DYNAMIC_PARTITIONS_PER_NODE/$MAX_DYNAMIC_PARTITIONS_PER_NODE/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+		mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+	fi
+
+	sed "s/SPARK_POSTGRES_PASSWORD/$DB_PASSWORD/" $SPARK_HOME/conf/hive-site.xml >> $SPARK_HOME/conf/hive-site.xml.tmp && \
+	mv $SPARK_HOME/conf/hive-site.xml.tmp $SPARK_HOME/conf/hive-site.xml
+
+	cd $SPARK_HOME/jars
+
+	export PGPASSWORD=$DB_PASSWORD
+
+	psql -h $POSTGRES_HOSTNAME -p $POSTGRES_PORT  -U  $DB_USER -d $DB_NAME -f $SPARK_HOME/jars/hive-schema-1.2.0.postgres.sql
+fi
+
 
 #Configure log4j2 for bdlcl logs
 mv $SPARK_HOME/conf/log4j2.xml.default $SPARK_HOME/conf/log4j2.xml
