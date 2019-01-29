@@ -129,6 +129,9 @@ rm -rf /opt/spark-2.4.0-bin-hadoop2.7/jars/guava-14.0.1.jar
 rm -rf /usr/bin/python
 ln -s /opt/conda/bin/python3.6 /usr/bin/python
 
+mkdir /tmp/hive
+chmod -R 777 /tmp/hive 
+
 rm -rf /opt/bigstepdatalake-0.10.4/conf/core-site.xml
 cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.10.4/conf/
 
