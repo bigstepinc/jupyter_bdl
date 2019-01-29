@@ -38,4 +38,8 @@
       <name>hive.exec.max.dynamic.partitions.pernode</name>
       <value>MAX_DYNAMIC_PARTITIONS_PER_NODE</value>
   </property>
+   <property>
+        <name>hive.exec.scratchdir</name>
+        <value>file:///tmp/hive/</value>
+  </property>
 </configuration>
