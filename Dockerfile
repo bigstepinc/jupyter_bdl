@@ -8,7 +8,7 @@ ADD handlers.py /opt/
 RUN apt-get update -y
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
@@ -82,7 +82,8 @@ RUN pip install modin && \
    pip install lightgbm && \
    pip install py4j && \
    pip install plotly && \
-   pip install pyspark
+   pip install pyspark && \
+   pip install featuretools
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
