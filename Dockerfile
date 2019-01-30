@@ -94,11 +94,15 @@ RUN apt-get install -y make
 RUN pip install nose pillow
 
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.4-bin.tar.gz  && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bigstepdatalake-0.10.4-bin.tar.gz && \
     tar -xzvf bigstepdatalake-0.10.4-bin.tar.gz && \
     rm -rf /opt/bigstepdatalake-0.10.4-bin.tar.gz && \
+    cd /opt/bigstepdatalake-0.10.4/lib/ && \
+    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/BDL_libs/libhadoop.so && \
     cp /opt/bigstepdatalake-0.10.4/lib/* $SPARK_HOME/jars/ && \
-    export PATH=/opt/bigstepdatalake-0.10.4/bin:$PATH
+    export PATH=/opt/bigstepdatalake-0.10.4/bin:$PATH && \
+    echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-0.10.4/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
+    source  ~/.bashrc
 
 # Install bdl_notebooks
 RUN cd /opt && \
