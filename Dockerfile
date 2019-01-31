@@ -103,7 +103,7 @@ RUN cd /opt && \
     cp /opt/bigstepdatalake-0.10.4/lib/* $SPARK_HOME/jars/ && \
     export PATH=/opt/bigstepdatalake-0.10.4/bin:$PATH && \
     echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-0.10.4/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
-    source  ~/.bashrc
+    bash ~/.bashrc
 
 # Install bdl_notebooks
 RUN cd /opt && \
