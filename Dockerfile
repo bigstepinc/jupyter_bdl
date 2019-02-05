@@ -88,7 +88,7 @@ RUN pip install modin && \
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
-RUN wget http://repo.uk.bigstepcloud.com/bigstep/bdl/Getting%20Started%20in%20Python%203.ipynb -O /user/notebooks/Getting\ Started\ in\ Python\ 3.ipynb 
+RUN wget http://repo.uk.bigstepcloud.com/bigstep/bdl/Getting%20Started%20in%20Python%203%20%281%29.ipynb -O /user/notebooks/Getting\ Started\ in\ Python\ 3.ipynb 
    
 RUN apt-get install -y make
 
