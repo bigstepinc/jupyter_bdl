@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'export SPARK_HOME="/opt/spark-2.4.0-bin-hadoop2.7"'>> ~/.bashrc
-echo 'export BDL_HOME="/opt/bigstepdatalake-0.10.4"' >> ~/.bashrc
+echo 'export BDL_HOME="/opt/bigstepdatalake-0.10.6"' >> ~/.bashrc
 echo 'export JAVA_HOME="/opt/jdk1.8.0_202/"' >> ~/.bashrc                                                                                                                            
 echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
@@ -52,6 +52,7 @@ fi
 if [ "$SPARK_WAREHOUSE_DIR" != "" ]; then
 	echo "spark.sql.warehouse.dir=${SPARK_WAREHOUSE_DIR}" >> $SPARK_HOME/conf/spark-defaults.conf
 	echo "spark.sql.catalogImplementation=hive" >> $SPARK_HOME/conf/spark-defaults.conf
+	echo "spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version=2" >> $SPARK_HOME/conf/spark-defaults.conf
 fi
 
 if [ "$DB_TYPE" == "postgresql" ]; then
@@ -132,8 +133,8 @@ ln -s /opt/conda/bin/python3.6 /usr/bin/python
 mkdir /tmp/hive
 chmod -R 777 /tmp/hive 
 
-rm -rf /opt/bigstepdatalake-0.10.4/conf/core-site.xml
-cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.10.4/conf/
+rm -rf /opt/bigstepdatalake-0.10.6/conf/core-site.xml
+cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.10.6/conf/
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
