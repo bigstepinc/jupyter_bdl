@@ -83,7 +83,8 @@ RUN pip install modin && \
    pip install py4j && \
    pip install plotly && \
    pip install pyspark && \
-   pip install featuretools
+   pip install featuretools && \
+   pip install setproctitle
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
