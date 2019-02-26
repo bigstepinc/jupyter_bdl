@@ -96,14 +96,14 @@ RUN apt-get install -y make
 RUN pip install nose pillow
 
 RUN cd /opt && \
-    wget https://repo.lentiq.com/bigstepdatalake-0.10.10-bin.tar.gz && \
-    tar -xzvf bigstepdatalake-0.10.10-bin.tar.gz && \
-    rm -rf /opt/bigstepdatalake-0.10.10-bin.tar.gz && \
-    cd /opt/bigstepdatalake-0.10.10/lib/ && \
+    wget https://repo.lentiq.com/bigstepdatalake-0.10.11-bin.tar.gz && \
+    tar -xzvf bigstepdatalake-0.10.11-bin.tar.gz && \
+    rm -rf /opt/bigstepdatalake-0.10.11-bin.tar.gz && \
+    cd /opt/bigstepdatalake-0.10.11/lib/ && \
     wget http://repo.uk.bigstepcloud.com/bigstep/bdl/BDL_libs/libhadoop.so && \
-    cp /opt/bigstepdatalake-0.10.10/lib/* $SPARK_HOME/jars/ && \
-    export PATH=/opt/bigstepdatalake-0.10.10/bin:$PATH && \
-    echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-0.10.10/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
+    cp /opt/bigstepdatalake-0.10.11/lib/* $SPARK_HOME/jars/ && \
+    export PATH=/opt/bigstepdatalake-0.10.11/bin:$PATH && \
+    echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-0.10.11/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
     bash ~/.bashrc
 
 # Install bdl_notebooks
@@ -137,7 +137,7 @@ RUN cd $SPARK_HOME/jars/ && \
    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
    apt-get install -y postgresql-client
    
-ENV PATH /opt/bigstepdatalake-0.10.10/bin:$PATH
+ENV PATH /opt/bigstepdatalake-0.10.11/bin:$PATH
    
 #        Jupyter 
 EXPOSE   8888     
