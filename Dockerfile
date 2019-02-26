@@ -84,12 +84,14 @@ RUN pip install modin && \
    pip install plotly && \
    pip install pyspark && \
    pip install featuretools && \
-   pip install setproctitle
+   pip install setproctitle && \
+   pip uninstall numpy && \
+   pip install numpy==1.14
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
-RUN wget https://repo.lentiq.com/Getting%20Started%20Guide.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb 
+RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20%283%29.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb 
    
 RUN apt-get install -y make
 
