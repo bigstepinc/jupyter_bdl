@@ -86,7 +86,7 @@ RUN pip install modin && \
    pip install featuretools && \
    pip install setproctitle && \
    pip uninstall numpy && \
-   pip install numpy==1.14
+   pip install -y numpy==1.14
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
