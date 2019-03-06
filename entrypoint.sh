@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'export SPARK_HOME="/opt/spark-2.4.0-bin-hadoop2.7"'>> ~/.bashrc
-echo 'export BDL_HOME="/opt/bigstepdatalake-0.11.0"' >> ~/.bashrc
+echo 'export BDL_HOME="/opt/bigstepdatalake-0.11.1"' >> ~/.bashrc
 echo 'export JAVA_HOME="/opt/jdk1.8.0_202/"' >> ~/.bashrc                                                                                                                            
 echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
@@ -133,8 +133,8 @@ ln -s /opt/conda/bin/python3.6 /usr/bin/python
 mkdir /tmp/hive
 chmod -R 777 /tmp/hive 
 
-rm -rf /opt/bigstepdatalake-0.11.0/conf/core-site.xml
-cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.11.0/conf/
+rm -rf /opt/bigstepdatalake-0.11.1/conf/core-site.xml
+cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.11.1/conf/
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
