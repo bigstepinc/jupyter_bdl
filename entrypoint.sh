@@ -16,7 +16,7 @@ if [ "$NOTEBOOK_DIR" != "" ]; then
 	export ESCAPED_PERSISTENT_NB_DIR="${NOTEBOOK_DIR//\//\\/}"
 	
 	mkdir $NOTEBOOK_DIR/notebooks
-	cp /user/notebooks/* $NOTEBOOK_DIR/notebooks/
+	cp -R /user/notebooks/* $NOTEBOOK_DIR/notebooks/
 
 	sed "s/#c.NotebookApp.notebook_dir = ''/c.NotebookApp.notebook_dir = \'$ESCAPED_PERSISTENT_NB_DIR\/notebooks\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
 	mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
@@ -30,6 +30,11 @@ if [ "$DATALAKE_ID" != "" ]; then
 	echo "c.Examples.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
 fi
+
+if [ "$PROJECT" != "" ]; then
+	sed "s/PROJECT-my-spark-bdl-spark-master.PROJECT.svc.cluster.local/${PROJECT}-my-spark-bdl-spark-master.${PROJECT}.svc.cluster.local" /lentiq/notebooks/Getting\ Started\ Guide.ipynb >> /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp && \
+	mv /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp /lentiq/notebooks/Getting\ Started\ Guide.ipynb
+fi 
 
 #Configure core-site.xml based on the configured authentication method
 if [ "$AUTH_METHOD" == "apikey" ]; then
