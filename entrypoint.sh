@@ -141,6 +141,8 @@ chmod -R 777 /tmp/hive
 rm -rf /opt/bigstepdatalake-0.11.1/conf/core-site.xml
 cp /opt/spark-2.4.0-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.11.1/conf/
 
+rm -rf /lentiq/notebooks/ml-latest-small.zip
+
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
 else
