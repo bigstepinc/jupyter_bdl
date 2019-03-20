@@ -32,7 +32,7 @@ if [ "$DATALAKE_ID" != "" ]; then
 fi
 
 if [ "$PROJECT" != "" ]; then
-	sed "s/PROJECT-my-spark-bdl-spark-master.PROJECT.svc.cluster.local/${PROJECT}-my-spark-bdl-spark-master.${PROJECT}.svc.cluster.local" /lentiq/notebooks/Getting\ Started\ Guide.ipynb >> /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp && \
+	sed "s/PROJECT-my-spark-bdl-spark-master.PROJECT.svc.cluster.local/${PROJECT}-my-spark-bdl-spark-master.${PROJECT}.svc.cluster.local/" /lentiq/notebooks/Getting\ Started\ Guide.ipynb >> /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp && \
 	mv /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp /lentiq/notebooks/Getting\ Started\ Guide.ipynb
 fi 
 
