@@ -91,7 +91,7 @@ RUN pip install modin && \
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
-RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20%285%29.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb && \
+RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20%287%29.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb && \
     wget https://repo.lentiq.com/recommender_systems_webinar%20%281%29.ipynb -O /user/notebooks/Recommender\ Systems\ Guide.ipynb && \
     mkdir /user/notebooks/recommender/ && \
     mkdir /user/notebooks/recommender/pictures && \
@@ -116,16 +116,16 @@ RUN cd /opt && \
 
 # Install bdl_notebooks
 RUN cd /opt && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/bdl_client_python_1.0.0.tar.gz && \
+    wget https://repo.lentiq.com/bdl_client_python_1.0.0.tar.gz && \
     tar -xzvf bdl_client_python_1.0.0.tar.gz && \
     rm -rf /opt/bdl_client_python_1.0.0.tar.gz && \
     cd ./bdl_client_python && \
     pip install . && \
     cd .. && \
     rm -rf bdl_client_python && \
-    wget http://repo.uk.bigstepcloud.com/bigstep/bdl/jupyter_shared_notebook_module_0.2.tar.gz && \
-    tar -xzvf jupyter_shared_notebook_module_0.2.tar.gz && \
-    rm -rf /opt/jupyter_shared_notebook_module_0.2.tar.gz && \
+    wget https://repo.lentiq.com/jupyter_shared_notebook_module_0.3.tar.gz && \
+    tar -xzvf jupyter_shared_notebook_module_0.3.tar.gz && \
+    rm -rf /opt/jupyter_shared_notebook_module_0.3.tar.gz && \
     cd ./jupyter_shared_notebook_module && \
     pip install . && \
     cd .. && \
