@@ -30,13 +30,13 @@ RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://downloa
 RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk1.8.0_202/jre/lib/security/ && cp UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk1.8.0_202/jre/lib/security/
 RUN rm -rf UnlimitedJCEPolicyJDK8
 
-# Install Spark 2.4.0
-RUN cd /opt && wget https://www-eu.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz && \
-   tar xzvf /opt/spark-2.4.0-bin-hadoop2.7.tgz && \
-   rm  /opt/spark-2.4.0-bin-hadoop2.7.tgz 
+# Install Spark 2.4.1
+RUN cd /opt && wget https://www-eu.apache.org/dist/spark/spark-2.4.1/spark-2.4.1-bin-hadoop2.7.tgz && \
+   tar xzvf /opt/spark-2.4.1-bin-hadoop2.7.tgz && \
+   rm  /opt/spark-2.4.1-bin-hadoop2.7.tgz 
    
 # Spark pointers for Jupyter Notebook
-ENV SPARK_HOME /opt/spark-2.4.0-bin-hadoop2.7
+ENV SPARK_HOME /opt/spark-2.4.1-bin-hadoop2.7
 
 ENV PATH $PATH:/$SPARK_HOME/bin/
 ADD core-site.xml.apiKey $SPARK_HOME/conf/
