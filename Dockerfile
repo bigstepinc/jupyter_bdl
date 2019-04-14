@@ -86,7 +86,8 @@ RUN pip install modin && \
    pip install featuretools && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
-   pip install numpy==1.14
+   pip install numpy==1.14 && \
+   pip install mleap
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
@@ -97,7 +98,11 @@ RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20%287%29.ipynb -O /u
     mkdir /user/notebooks/recommender/pictures && \
     wget https://repo.lentiq.com/Recommender-1.jpg -O /user/notebooks/recommender/pictures/Recommender-1.jpg && \
     wget https://repo.lentiq.com/Recommender-2.jpg -O /user/notebooks/recommender/pictures/Recommender-2.jpg && \
-    wget https://repo.lentiq.com/Recommender-3.jpg -O /user/notebooks/recommender/pictures/Recommender-3.jpg 
+    wget https://repo.lentiq.com/Recommender-3.jpg -O /user/notebooks/recommender/pictures/Recommender-3.jpg && \
+    wget https://repo.lentiq.com/mleap-0.8.1-py36.patch -O /opt/ && \
+    patch -p0 -d /opt/conda/lib/python3.6/site-packages/ < /opt/mleap-0.8.1-py36.patch && \
+    wget https://repo.lentiq.com/scikit-learn%20training%20with%20model%20serving%20example.ipynb -O /user/notebooks/Scikit-learn\ training\ with\ model\ serving\ example.ipynb && \
+    wget https://repo.lentiq.com/pyspark%20training%20with%20model%20serving%20example.ipynb -O /user/notebooks/Pyspark\ training\ with\ model\ serving\ example.ipynb
    
 RUN apt-get install -y make
 
