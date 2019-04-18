@@ -146,5 +146,7 @@ rm -rf /lentiq/notebooks/ml-latest-small.zip
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
 elif [[ "$MODE" == "codeblock" ]]; then 
-	#do nothing
+	echo "codeblock"
+else
+	echo "none"
 fi
