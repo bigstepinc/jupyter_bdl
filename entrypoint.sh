@@ -2,8 +2,8 @@
 
 echo 'export SPARK_HOME="/opt/spark-2.4.1-bin-hadoop2.7"'>> ~/.bashrc
 echo 'export BDL_HOME="/opt/bigstepdatalake-0.11.1"' >> ~/.bashrc
-echo 'export JAVA_HOME="/opt/jdk1.8.0_202/"' >> ~/.bashrc                                                                                                                            
-echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_202/bin:/opt/jdk1.8.0_202/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
+echo 'export JAVA_HOME="/opt/jdk1.8.0_211/"' >> ~/.bashrc                                                                                                                            
+echo 'export PATH="$BDL_HOME/bin:$PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="$JAVA_HOME/jre/lib/"' >> ~/.bashrc
 echo 'export JAVA_OPTS="-Dsun.security.krb5.debug=true -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=256M"' >> ~/.bashrc
 source  ~/.bashrc 
