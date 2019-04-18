@@ -8,26 +8,31 @@ ADD handlers.py /opt/
 RUN apt-get update -y
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
 
 # Install Java 8
-ENV JAVA_HOME /opt/jdk1.8.0_211
-ENV PATH $PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin:/etc/alternatives:/var/lib/dpkg/alternatives
+#ENV JAVA_HOME /opt/jdk1.8.0_211
+ENV JAVA_HOME /usr
+#ENV PATH $PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin:/etc/alternatives:/var/lib/dpkg/alternatives
+ENV PATH $PATH:/usr/bin:/usr/lib:/etc/alternatives:/var/lib/dpkg/alternatives
 
-RUN cd /opt && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz" &&\
-   tar xzf jdk-8u211-linux-x64.tar.gz && rm -rf jdk-8u211-linux-x64.tar.gz
+#RUN cd /opt && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz" &&\
+#   tar xzf jdk-8u211-linux-x64.tar.gz && rm -rf jdk-8u211-linux-x64.tar.gz
 
-RUN echo 'export JAVA_HOME="/opt/jdk1.8.0_211"' >> ~/.bashrc && \
-    echo 'export PATH="$PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin"' >> ~/.bashrc && \
-    bash ~/.bashrc && cd /opt/jdk1.8.0_211/ && update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_211/bin/java 1
+RUN echo 'export JAVA_HOME="/usr/bin"' >> ~/.bashrc && \
+#echo 'export JAVA_HOME="/opt/jdk1.8.0_211"' >> ~/.bashrc && \
+    #echo 'export PATH="$PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin"' >> ~/.bashrc && \
+    echo 'export PATH="$PATH:/usr/bin:/usr/lib"' >> ~/.bashrc && \
+    bash ~/.bashrc 
+    #&& cd /opt/jdk1.8.0_211/ && update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_211/bin/java 1
     
 #Add Java Security Policies
 RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
    unzip jce_policy-8.zip
-RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk1.8.0_211/jre/lib/security/ && cp UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk1.8.0_211/jre/lib/security/
+RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security && cp UnlimitedJCEPolicyJDK8/local_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security
 RUN rm -rf UnlimitedJCEPolicyJDK8
 
 # Install Spark 2.4.1
