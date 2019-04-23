@@ -92,9 +92,8 @@ RUN pip install modin && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
    pip install numpy==1.14 && \
-   pip install mleap && \
-   pip install http://repo.bigstepcloud.com/lentiq/python-mleap-0.13.tar.gz
-    
+   pip install mleap
+   
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
@@ -125,7 +124,9 @@ RUN cd /opt && \
     cp /opt/bigstepdatalake-0.11.1/lib/* $SPARK_HOME/jars/ && \
     export PATH=/opt/bigstepdatalake-0.11.1/bin:$PATH && \
     echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-0.11.1/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
-    bash ~/.bashrc
+    bash ~/.bashrc && \
+    pip install http://repo.bigstepcloud.com/lentiq/python-mleap-0.13.tar.gz
+    
 
 # Install bdl_notebooks
 RUN cd /opt && \
