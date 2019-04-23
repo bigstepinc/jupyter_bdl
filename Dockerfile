@@ -92,7 +92,8 @@ RUN pip install modin && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
    pip install numpy==1.14 && \
-   pip install mleap
+   pip install mleap && \
+   pip install http://repo.bigstepcloud.com/lentiq/python-mleap-0.13.tar.gz
     
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
