@@ -14,6 +14,7 @@ FILE=/lentiq/notebooks/HairEyeColor.csv
 if test -f "$FILE"; then
     echo "$FILE exists"
     rm /lentiq/notebooks/HairEyeColor.csv
+    rm /lentiq/notebooks/on-boarding.ipynb
     exit 0
 fi
 else 
