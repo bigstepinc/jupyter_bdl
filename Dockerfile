@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 
 ADD entrypoint.sh /
+ADD execute-notebook.sh /
 ADD password.py /opt/
 ADD env.sh /opt/
 ADD handlers.py /opt/
@@ -49,7 +50,7 @@ ADD log4j2.xml.default $SPARK_HOME/conf/
 ADD hive-site.xml $SPARK_HOME/conf/
 
 # Create additional files in the DataLake
-RUN mkdir -p /user && mkdir -p /user/notebooks && mkdir -p /user/datasets && chmod 777 /entrypoint.sh
+RUN mkdir -p /user && mkdir -p /user/notebooks && mkdir -p /user/datasets && chmod 777 /entrypoint.sh && chmod 777 /execute-notebook.sh
 
 # Setup Miniconda
 ENV CONDA_DIR /opt/conda
