@@ -16,7 +16,6 @@ if test -f "$FILE"; then
     rm /lentiq/notebooks/HairEyeColor.csv
     rm /lentiq/notebooks/on-boarding.ipynb
     exit 0
-fi
 else 
   echo "$FILE does not exist"
   sleep 10
