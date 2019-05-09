@@ -85,7 +85,7 @@ RUN pip install modin && \
    pip install lightgbm && \
    pip install py4j && \
    pip install plotly && \
-   pip install pyspark && \
+   pip install pyspark==$SPARK_VERSION && \
    pip install featuretools && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
