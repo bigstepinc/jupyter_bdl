@@ -8,6 +8,11 @@ ADD handlers.py /opt/
 
 RUN apt-get update -y
 
+ENV SPARK_VERSION 2.4.1
+ENV BDLCL_VERSION 0.11.3
+ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
+ENV JUPYTER_NB_MODULE_VERSION 0.3
+
 #Install yarn and NodeJS
 RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -15,20 +20,12 @@ RUN apt-get install -y nodejs
 RUN npm install yarn -g
 
 # Install Java 8
-#ENV JAVA_HOME /opt/jdk1.8.0_211
 ENV JAVA_HOME /usr
-#ENV PATH $PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin:/etc/alternatives:/var/lib/dpkg/alternatives
 ENV PATH $PATH:/usr/bin:/usr/lib:/etc/alternatives:/var/lib/dpkg/alternatives
 
-#RUN cd /opt && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz" &&\
-#   tar xzf jdk-8u211-linux-x64.tar.gz && rm -rf jdk-8u211-linux-x64.tar.gz
-
-RUN echo 'export JAVA_HOME="/usr/bin"' >> ~/.bashrc && \
-#echo 'export JAVA_HOME="/opt/jdk1.8.0_211"' >> ~/.bashrc && \
-    #echo 'export PATH="$PATH:/opt/jdk1.8.0_211/bin:/opt/jdk1.8.0_211/jre/bin"' >> ~/.bashrc && \
+RUN echo 'export JAVA_HOME="/usr"' >> ~/.bashrc && \
     echo 'export PATH="$PATH:/usr/bin:/usr/lib"' >> ~/.bashrc && \
     bash ~/.bashrc 
-    #&& cd /opt/jdk1.8.0_211/ && update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_211/bin/java 1
     
 #Add Java Security Policies
 RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
@@ -37,12 +34,12 @@ RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-a
 RUN rm -rf UnlimitedJCEPolicyJDK8
 
 # Install Spark 2.4.1
-RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-2.4.1/spark-2.4.1-bin-hadoop2.7.tgz && \
-   tar xzvf /opt/spark-2.4.1-bin-hadoop2.7.tgz && \
-   rm  /opt/spark-2.4.1-bin-hadoop2.7.tgz 
+RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
+   tar xzvf /opt/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
+   rm  /opt/spark-$SPARK_VERSION-bin-hadoop2.7.tgz 
    
 # Spark pointers for Jupyter Notebook
-ENV SPARK_HOME /opt/spark-2.4.1-bin-hadoop2.7
+ENV SPARK_HOME /opt/spark-$SPARK_VERSION-bin-hadoop2.7
 
 ENV PATH $PATH:/$SPARK_HOME/bin/
 ADD core-site.xml.apiKey $SPARK_HOME/conf/
@@ -118,30 +115,30 @@ RUN apt-get install -y make
 RUN pip install nose pillow
 
 RUN cd /opt && \
-    wget https://repo.lentiq.com/bigstepdatalake-0.11.3-bin.tar.gz && \
-    tar -xzvf bigstepdatalake-0.11.3-bin.tar.gz && \
-    rm -rf /opt/bigstepdatalake-0.11.3-bin.tar.gz && \
-    cd /opt/bigstepdatalake-0.11.3/lib/ && \
+    wget https://repo.lentiq.com/bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
+    tar -xzvf bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
+    rm -rf /opt/bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
+    cd /opt/bigstepdatalake-$BDLCL_VERSION/lib/ && \
     wget http://repo.uk.bigstepcloud.com/bigstep/bdl/BDL_libs/libhadoop.so && \
-    cp /opt/bigstepdatalake-0.11.3/lib/* $SPARK_HOME/jars/ && \
-    export PATH=/opt/bigstepdatalake-0.11.3/bin:$PATH && \
-    echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-0.11.3/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
+    cp /opt/bigstepdatalake-$BDLCL_VERSION/lib/* $SPARK_HOME/jars/ && \
+    export PATH=/opt/bigstepdatalake-$BDLCL_VERSION/bin:$PATH && \
+    echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/bigstepdatalake-$BDLCL_VERSION/lib/:$SPARK_HOME/jars/' >> ~/.bashrc && \
     bash ~/.bashrc && \
     pip install http://repo.bigstepcloud.com/lentiq/python-mleap-0.13.tar.gz
     
 
 # Install bdl_notebooks
 RUN cd /opt && \
-    wget https://repo.lentiq.com/bdl_client_python_1.0.0.tar.gz && \
-    tar -xzvf bdl_client_python_1.0.0.tar.gz && \
-    rm -rf /opt/bdl_client_python_1.0.0.tar.gz && \
+    wget https://repo.lentiq.com/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
+    tar -xzvf bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
+    rm -rf /opt/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
     cd ./bdl_client_python && \
     pip install . && \
     cd .. && \
     rm -rf bdl_client_python && \
-    wget https://repo.lentiq.com/jupyter_shared_notebook_module_0.3.tar.gz && \
-    tar -xzvf jupyter_shared_notebook_module_0.3.tar.gz && \
-    rm -rf /opt/jupyter_shared_notebook_module_0.3.tar.gz && \
+    wget https://repo.lentiq.com/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
+    tar -xzvf jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
+    rm -rf /opt/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
     cd ./jupyter_shared_notebook_module && \
     pip install . && \
     cd .. && \
@@ -161,7 +158,7 @@ RUN cd $SPARK_HOME/jars/ && \
    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
    apt-get install -y postgresql-client 
    
-ENV PATH /opt/bigstepdatalake-0.11.3/bin:$PATH
+ENV PATH /opt/bigstepdatalake-$BDLCL_VERSION/bin:$PATH
    
 #        Jupyter 
 EXPOSE   8888     
