@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'export SPARK_HOME="/opt/spark-2.4.1-bin-hadoop2.7"'>> ~/.bashrc
-echo 'export BDL_HOME="/opt/bigstepdatalake-0.11.1"' >> ~/.bashrc
+echo 'export BDL_HOME="/opt/bigstepdatalake-0.11.3"' >> ~/.bashrc
 echo 'export JAVA_HOME="/usr"' >> ~/.bashrc                                                                                                                            
 echo 'export PATH="$BDL_HOME/bin:$PATH:/usr/bin:/usr/lib:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
 echo 'export JAVA_CLASSPATH="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/"' >> ~/.bashrc
@@ -138,8 +138,8 @@ ln -s /opt/conda/bin/python3.6 /usr/bin/python
 mkdir /tmp/hive
 chmod -R 777 /tmp/hive 
 
-rm -rf /opt/bigstepdatalake-0.11.1/conf/core-site.xml
-cp /opt/spark-2.4.1-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.11.1/conf/
+rm -rf /opt/bigstepdatalake-0.11.3/conf/core-site.xml
+cp /opt/spark-2.4.1-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-0.11.3/conf/
 
 rm -rf /lentiq/notebooks/ml-latest-small.zip
 
