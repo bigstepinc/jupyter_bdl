@@ -62,6 +62,10 @@ if [ "$SPARK_WAREHOUSE_DIR" != "" ]; then
 	echo "spark.sql.warehouse.dir=${SPARK_WAREHOUSE_DIR}" >> $SPARK_HOME/conf/spark-defaults.conf
 	echo "spark.sql.catalogImplementation=hive" >> $SPARK_HOME/conf/spark-defaults.conf
 	echo "spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version=2" >> $SPARK_HOME/conf/spark-defaults.conf
+	echo "spark.sql.hive.metastore.jars=maven" >> $SPARK_HOME/conf/spark-defaults.conf
+	echo "spark.sql.hive.metastore.version=2.3.2" >> $SPARK_HOME/conf/spark-defaults.conf
+	echo "spark.sql.legacy.allowCreatingManagedTableUsingNonemptyLocation=true" >> $SPARK_HOME/conf/spark-defaults.conf
+
 fi
 
 if [ "$DB_TYPE" == "postgresql" ]; then
