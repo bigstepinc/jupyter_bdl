@@ -118,7 +118,7 @@ if [ "$DB_TYPE" == "postgresql" ]; then
 
 	export PGPASSWORD=$DB_PASSWORD
 
-	psql -h $POSTGRES_HOSTNAME -p $POSTGRES_PORT  -U  $DB_USER -d $DB_NAME -f $SPARK_HOME/jars/hive-schema-1.2.0.postgres.sql
+	#psql -h $POSTGRES_HOSTNAME -p $POSTGRES_PORT  -U  $DB_USER -d $DB_NAME -f $SPARK_HOME/jars/hive-schema-1.2.0.postgres.sql
 fi
 
 
@@ -151,6 +151,8 @@ cp /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatala
 
 rm -rf /lentiq/notebooks/ml-latest-small.zip
 
+mkdir /root/.ivy2
+mkdir /root/.ivy2/jars
 touch /root/.ivy2/jars/org.apache.zookeeper_zookeeper-3.4.6.jar
 cp $SPARK_HOME/jars/zookeeper-3.4.6.jar /root/.ivy2/jars/org.apache.zookeeper_zookeeper-3.4.6.jar
 
