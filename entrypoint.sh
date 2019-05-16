@@ -151,6 +151,7 @@ cp /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatala
 
 rm -rf /lentiq/notebooks/ml-latest-small.zip
 
+touch /root/.ivy2/jars/org.apache.zookeeper_zookeeper-3.4.6.jar
 cp $SPARK_HOME/jars/zookeeper-3.4.6.jar /root/.ivy2/jars/org.apache.zookeeper_zookeeper-3.4.6.jar
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
