@@ -3,18 +3,18 @@
 counter="0"
 
 echo "Trying to download the script from the repo"
-cd /opt && wget https://repo.lentiq.com/starter.py 
+cd /opt && wget https://repo.lentiq.com/sample_starter.py 
 
 while [ $counter -lt 10 ]
 do
 echo "Trying to execute local notebook" 
-python /opt/starter.py >> /opt/output.txt
+python /opt/sample_starter.py >> /opt/output.txt
 
 FILE=/opt/output.txt
 if [[ 'grep 'DONE' $FILE' ]];then
     echo "The execution of the starter script has ended successfully"
     rm /opt/output.txt
-    rm /opt/starter.py
+    rm /opt/sample_starter.py
     exit 0
 else 
   echo "The execution of the starter script has not ended successfully"
