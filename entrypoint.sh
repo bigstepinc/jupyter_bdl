@@ -148,6 +148,9 @@ cp /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatala
 
 rm -rf /lentiq/notebooks/ml-latest-small.zip
 
+cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
+echo 'export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=/opt/bigstepdatalake-$BDLCL_VERSION/lib”' >> $SPARK_HOME/conf/spark-env.sh
+
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	/execute-notebook.sh &
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
