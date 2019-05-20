@@ -19,7 +19,7 @@ fi
 if [ "$NOTEBOOK_DIR" != "" ]; then
 	export ESCAPED_PERSISTENT_NB_DIR="${NOTEBOOK_DIR//\//\\/}"
 	
-	mkdir $NOTEBOOK_DIR/notebooks
+	#mkdir $NOTEBOOK_DIR/notebooks
 	cp -R /user/notebooks/* $NOTEBOOK_DIR/notebooks/
 
 	sed "s/#c.NotebookApp.notebook_dir = ''/c.NotebookApp.notebook_dir = \'$ESCAPED_PERSISTENT_NB_DIR\/notebooks\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
@@ -55,7 +55,7 @@ if [ "$AUTH_METHOD" == "apikey" ]; then
 		sed "s/BDL_DEFAULT_PATH/${BDL_DEFAULT_PATH//\//\\/}/" $SPARK_HOME/conf/core-site.xml >> $SPARK_HOME/conf/core-site.xml.tmp && \
 		mv $SPARK_HOME/conf/core-site.xml.tmp $SPARK_HOME/conf/core-site.xml
 	fi
-	cp $SPARK_HOME/conf/core-site.xml $BDL_HOME/conf/core-site.xml
+	#cp $SPARK_HOME/conf/core-site.xml $BDL_HOME/conf/core-site.xml
 fi
 
 if [ "$SPARK_WAREHOUSE_DIR" != "" ]; then
@@ -119,6 +119,7 @@ fi
 
 
 #Configure log4j2 for bdlcl logs
+touch $SPARK_HOME/conf/log4j2.xml
 mv $SPARK_HOME/conf/log4j2.xml.default $SPARK_HOME/conf/log4j2.xml
 
 if [ "$MODE" == "" ]; then
