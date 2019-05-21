@@ -148,8 +148,12 @@ cp /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatala
 
 rm -rf /lentiq/notebooks/ml-latest-small.zip
 
+#remove excessive logging from bdl script
 cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
-echo 'export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=/opt/bigstepdatalake-$BDLCL_VERSION/lib”' >> $SPARK_HOME/conf/spark-env.sh
+echo 'export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=/opt/bigstepdatalake-$BDLCL_VERSION/lib"' >> $SPARK_HOME/conf/spark-env.sh
+touch $BDL_HOME/conf/logging.properties
+echo ".level = SEVERE" >> $BDL_HOME/conf/logging.properties
+
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	/execute-notebook.sh &
