@@ -19,7 +19,7 @@ fi
 if [ "$NOTEBOOK_DIR" != "" ]; then
 	export ESCAPED_PERSISTENT_NB_DIR="${NOTEBOOK_DIR//\//\\/}"
 	
-	#mkdir $NOTEBOOK_DIR/notebooks
+	mkdir $NOTEBOOK_DIR/notebooks
 	cp -R /user/notebooks/* $NOTEBOOK_DIR/notebooks/
 
 	sed "s/#c.NotebookApp.notebook_dir = ''/c.NotebookApp.notebook_dir = \'$ESCAPED_PERSISTENT_NB_DIR\/notebooks\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
