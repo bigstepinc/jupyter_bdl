@@ -14,7 +14,7 @@ ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre make
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
@@ -91,7 +91,9 @@ RUN pip install modin && \
    pip uninstall -y numpy && \
    pip install numpy==1.14 && \
    pip install mleap && \
-   pip install sparkmonitor
+   pip install sparkmonitor && \
+   pip install nose pillow
+
    
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
@@ -110,10 +112,6 @@ RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20%2811%29.ipynb -O /
     wget https://repo.lentiq.com/pySpark%20model%20serving%20example.ipynb -O /user/notebooks/Pyspark\ model\ training\ example.ipynb && \
     wget https://repo.lentiq.com/update%20serving%20model%20%281%29.ipynb -O /user/notebooks/Update\ serving\ model\ example.ipynb
    
-RUN apt-get install -y make
-
-RUN pip install nose pillow
-
 RUN cd /opt && \
     wget https://repo.lentiq.com/bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
     tar -xzvf bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
