@@ -203,6 +203,7 @@ echo 'export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=/opt/bigstepdatalake-
 touch /opt/bigstepdatalake-$BDLCL_VERSION/conf/logging.properties
 echo ".level = SEVERE" >> /opt/bigstepdatalake-$BDLCL_VERSION/conf/logging.properties
 
+cd /lentiq/notebooks
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	/execute-notebook.sh &
