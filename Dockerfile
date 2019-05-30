@@ -157,7 +157,9 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_cell_handler && \
-    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py
+    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
+    pip uninstall tornado && \
+    pip install tornado==5.1.1
 
 #Add Thrift and Metadata support
 RUN cd $SPARK_HOME/jars/ && \
@@ -167,7 +169,7 @@ RUN cd $SPARK_HOME/jars/ && \
    wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -P $SPARK_HOME/jars/ && \
    add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" && \
    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-   apt-get install -y postgresql-client 
+   apt-get install -y postgresql-client
    
 ENV PATH /opt/bigstepdatalake-$BDLCL_VERSION/bin:$PATH
    
