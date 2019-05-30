@@ -90,7 +90,8 @@ RUN pip install modin && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
    pip install numpy==1.14 && \
-   pip install mleap
+   pip install mleap && \
+   pip install sparkmonitor
    
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
@@ -144,9 +145,22 @@ RUN cd /opt && \
     rm -rf jupyter_shared_notebook_module && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-    jupyter serverextension enable --py bdl_notebooks --sys-prefix
-   
-   
+    jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
+    jupyter nbextension install --py sparkmonitor --user --symlink && \
+    jupyter nbextension enable sparkmonitor --user --py && \
+    jupyter serverextension enable --py --user sparkmonitor && \
+    ipython profile create && \
+    echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
+    cd /opt && \
+    wget https://repo.lentiq.com/jupyter_cell_handler_0.1.tar.gz && \
+    tar -xzvf jupyter_cell_handler_0.1.tar.gz && \
+    rm -rf /opt/jupyter_cell_handler_0.1.tar.gz && \
+    cd ./jupyter_cell_handler && \
+    pip install . && \
+    cd .. && \
+    rm -rf jupyter_cell_handler && \
+    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py
+
 #Add Thrift and Metadata support
 RUN cd $SPARK_HOME/jars/ && \
    wget http://repo.bigstepcloud.com/bigstep/datalab/hive-schema-1.2.0.postgres.sql && \
