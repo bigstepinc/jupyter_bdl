@@ -141,6 +141,8 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_shared_notebook_module && \
+    pip uninstall -y tornado && \
+    pip install tornado==5.1.1 && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
@@ -157,9 +159,7 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_cell_handler && \
-    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
-    pip uninstall -y tornado && \
-    pip install tornado==5.1.1
+    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
 
 #Add Thrift and Metadata support
 RUN cd $SPARK_HOME/jars/ && \
