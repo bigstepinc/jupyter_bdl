@@ -158,7 +158,7 @@ RUN cd /opt && \
     cd .. && \
     rm -rf jupyter_cell_handler && \
     echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
-    pip uninstall tornado && \
+    pip uninstall -y tornado && \
     pip install tornado==5.1.1
 
 #Add Thrift and Metadata support
