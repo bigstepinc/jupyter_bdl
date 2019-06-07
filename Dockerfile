@@ -95,7 +95,7 @@ RUN pip install modin && \
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
 #Add Getting Started Notebooks and change Jupyter logo and download additional libraries
-RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20copy.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb && \ 
+RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20copy%20%281%29.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb && \ 
 #wget https://repo.lentiq.com/Getting%20Started%20Guide%20%2811%29.ipynb -O /user/notebooks/Getting\ Started\ Guide.ipynb && \
     wget https://repo.lentiq.com/recommender_systems_webinar%20%281%29.ipynb -O /user/notebooks/Recommender\ Systems\ Guide.ipynb && \
     mkdir /user/notebooks/recommender/ && \
