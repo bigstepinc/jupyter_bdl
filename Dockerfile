@@ -15,6 +15,8 @@ ENV JUPYTER_NB_MODULE_VERSION 0.3
 ENV JUPYTER_HANDLER_VERSION 0.2
 
 #Install yarn and NodeJS
+RUN apt-get update -y
+RUN apt-get upgrade -y
 RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre make
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
