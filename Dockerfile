@@ -12,6 +12,7 @@ ENV SPARK_VERSION 2.4.1
 ENV BDLCL_VERSION 0.12.3
 ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
+ENV JUPYTER_HANDLER_VERSION 0.2
 
 #Install yarn and NodeJS
 RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre make
@@ -152,9 +153,9 @@ RUN cd /opt && \
     ipython profile create && \
     echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
     cd /opt && \
-    wget https://repo.lentiq.com/jupyter_cell_handler_0.1.tar.gz && \
-    tar -xzvf jupyter_cell_handler_0.1.tar.gz && \
-    rm -rf /opt/jupyter_cell_handler_0.1.tar.gz && \
+    wget https://repo.lentiq.com/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    tar -xzvf jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    rm -rf /opt/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
     cd ./jupyter_cell_handler && \
     pip install . && \
     cd .. && \
