@@ -3,7 +3,9 @@
 counter="0"
 
 echo "Trying to download the script from the repo"
-cd /opt && wget https://repo.lentiq.com/sample_starter.py 
+#cd /opt && wget https://repo.lentiq.com/sample_starter.py 
+cd /opt && wget https://repo.lentiq.com/sample_starter_1.py
+
 
 while [ $counter -lt 10 ]
 do
