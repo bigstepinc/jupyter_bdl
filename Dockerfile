@@ -106,8 +106,10 @@ RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20copy%20%281%29.ipyn
     wget https://repo.lentiq.com/mleap-0.8.1-py36.patch -O /opt/mleap-0.8.1-py36.patch && \
     patch -p0 -d /opt/conda/lib/python3.6/site-packages/ < /opt/mleap-0.8.1-py36.patch && \
     rm -rf /opt/mleap-0.8.1-py36.patch && \
-    wget https://repo.lentiq.com/scikit-learn%20model%20serving%20example.ipynb -O /user/notebooks/Scikit-learn\ model\ training\ example.ipynb && \
-    wget https://repo.lentiq.com/pySpark%20model%20serving%20example.ipynb -O /user/notebooks/Pyspark\ model\ training\ example.ipynb && \
+    #wget https://repo.lentiq.com/scikit-learn%20model%20serving%20example.ipynb -O /user/notebooks/Scikit-learn\ model\ training\ example.ipynb && \
+    #wget https://repo.lentiq.com/pySpark%20model%20serving%20example.ipynb -O /user/notebooks/Pyspark\ model\ training\ example.ipynb && \
+    wget https://repo.lentiq.com/Scikit-learn%20model%20training%20example-3%20%281%29.ipynb -O /user/notebooks/Scikit-learn\ model\ training\ example.ipynb && \
+    wget https://repo.lentiq.com/Pyspark%20model%20training%20example.ipynb -O /user/notebooks/Pyspark\ model\ training\ example.ipynb && \
     wget https://repo.lentiq.com/update%20serving%20model%20%281%29.ipynb -O /user/notebooks/Update\ serving\ model\ example.ipynb
    
 RUN apt-get install -y make
