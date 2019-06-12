@@ -16,7 +16,7 @@ FILE=/opt/output.txt
 if [[ 'grep 'DONE' $FILE' ]];then
     echo "The execution of the starter script has ended successfully"
     rm /opt/output.txt
-    rm /opt/sample_starter.py
+    rm /opt/sample_starter_1.py
     exit 0
 else 
   echo "The execution of the starter script has not ended successfully"
