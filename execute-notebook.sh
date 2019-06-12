@@ -10,7 +10,7 @@ cd /opt && wget https://repo.lentiq.com/sample_starter_1.py
 while [ $counter -lt 10 ]
 do
 echo "Trying to execute local notebook" 
-python /opt/sample_starter.py >> /opt/output.txt
+python /opt/sample_starter_1.py >> /opt/output.txt
 
 FILE=/opt/output.txt
 if [[ 'grep 'DONE' $FILE' ]];then
