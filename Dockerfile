@@ -7,14 +7,17 @@ ADD env.sh /opt/
 ADD handlers.py /opt/
 
 RUN apt-get update -y
+RUN apt-get upgrade -y
 
 ENV SPARK_VERSION 2.4.1
 ENV BDLCL_VERSION 0.12.3
 ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
+ENV JUPYTER_HANDLER_VERSION 0.2
+
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre make
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
@@ -90,7 +93,14 @@ RUN pip install modin && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
    pip install numpy==1.14 && \
-   pip install mleap
+   pip install mleap && \
+   pip install sparkmonitor && \
+   pip install nose && \
+   pip install pillow && \
+   pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-0.1.tar.gz && \
+   pip uninstall -y tornado && \
+   pip install tornado==5.1.1
+
    
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
@@ -111,11 +121,7 @@ RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20copy%20%281%29.ipyn
     wget https://repo.lentiq.com/Scikit-learn%20model%20training%20example-3%20%281%29.ipynb -O /user/notebooks/Scikit-learn\ model\ training\ example.ipynb && \
     wget https://repo.lentiq.com/Pyspark%20model%20training%20example.ipynb -O /user/notebooks/Pyspark\ model\ training\ example.ipynb && \
     wget https://repo.lentiq.com/update%20serving%20model%20%281%29.ipynb -O /user/notebooks/Update\ serving\ model\ example.ipynb
-   
-RUN apt-get install -y make
 
-RUN pip install nose pillow && \
-    pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-0.1.tar.gz
 
 RUN cd /opt && \
     wget https://repo.lentiq.com/bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
@@ -148,7 +154,23 @@ RUN cd /opt && \
     rm -rf jupyter_shared_notebook_module && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-    jupyter serverextension enable --py bdl_notebooks --sys-prefix
+    jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
+    
+    jupyter nbextension install --py sparkmonitor --user --symlink && \
+    jupyter nbextension enable sparkmonitor --user --py && \
+    jupyter serverextension enable --py --user sparkmonitor && \
+    ipython profile create && \
+    echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
+    
+    cd /opt && \
+    wget https://repo.lentiq.com/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    tar -xzvf jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    rm -rf /opt/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    cd ./jupyter_cell_handler && \
+    pip install . && \
+    cd .. && \
+    rm -rf jupyter_cell_handler && \
+    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py
    
    
 #Add Thrift and Metadata support
