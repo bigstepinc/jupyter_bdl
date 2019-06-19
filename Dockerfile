@@ -6,8 +6,8 @@ ADD password.py /opt/
 ADD env.sh /opt/
 ADD handlers.py /opt/
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
+RUN apt update -y
+RUN apt upgrade -y
 
 ENV SPARK_VERSION 2.4.1
 ENV BDLCL_VERSION 0.12.3
