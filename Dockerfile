@@ -146,7 +146,10 @@ RUN cd /opt && \
     rm -rf jupyter_shared_notebook_module && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-    jupyter serverextension enable --py bdl_notebooks --sys-prefix
+    jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
+    pip install jupyter_contrib_nbextensions && \
+    jupyter contrib nbextension install --user && \
+    jupyter nbextension enable toc2/main
    
    
 #Add Thrift and Metadata support
