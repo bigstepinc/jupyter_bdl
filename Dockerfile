@@ -149,11 +149,27 @@ RUN cd /opt && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
-    jupyter nbextension install --py sparkmonitor --user --symlink && \
-    jupyter nbextension enable sparkmonitor --user --py && \
+    
+    cd /opt && \
+    git clone https://github.com/krishnan-r/sparkmonitor && \
+    cd sparkmonitor/extension && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/jobtable-extend.css -O /opt/sparkmonitor/extension/jobtable-extend.css && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/scr.sh -O /opt/sparkmonitor/extension/scr.sh && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/styles-extend.css -O /opt/sparkmonitor/extension/styles-extend.css && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/taskdetails-extend.css -O /opt/sparkmonitor/extension/taskdetails-extend.css && \
+    sh scr.sh && \
+    yarn install && \
+    yarn run webpack && \
+    cd scalalistener/ && \
+    sbt package && \
+    cd sparkmonitor/extension/ && \
+    pip install . && \
+    jupyter nbextension install sparkmonitor --py --user --symlink && \
+    jupyter nbextension enable sparkmonitor --py --user && \
     jupyter serverextension enable --py --user sparkmonitor && \
-    ipython profile create && \
-    echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
+    ipython profile create && echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
+    rm -rf /opt/sparkmonitor && \
+    
     cd /opt && \
     wget https://repo.lentiq.com/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
     tar -xzvf jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
