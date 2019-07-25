@@ -14,6 +14,11 @@ ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
 ENV JUPYTER_HANDLER_VERSION 0.2
 
+#Install Scala Spark kernel
+ENV SBT_VERSION 0.13.15
+ENV SBT_HOME /usr/local/sbt
+ENV PATH ${PATH}:${SBT_HOME}/bin
+
 #Install yarn and NodeJS
 RUN apt-get update -y
 RUN apt-get upgrade -y
@@ -35,6 +40,11 @@ RUN echo 'export JAVA_HOME="/usr"' >> ~/.bashrc && \
  #  unzip jce_policy-8.zip
 #RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security && cp UnlimitedJCEPolicyJDK8/local_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security
 #RUN rm -rf UnlimitedJCEPolicyJDK8
+
+# Install sbt
+RUN wget "http://repo.bigstepcloud.com/bigstep/datalab/sbt-0.13.11.tgz"
+RUN tar -xvf /sbt-0.13.11.tgz 
+RUN mv /sbt /usr/local/ && echo -ne "- with sbt $SBT_VERSION\n" >> /root/.built
 
 # Install Spark 2.4.1
 RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
