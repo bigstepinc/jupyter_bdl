@@ -162,7 +162,7 @@ RUN cd /opt && \
     
     cd /opt && \
     git clone https://github.com/krishnan-r/sparkmonitor && \
-    cd sparkmonitor/extension && \
+    cd /opt/sparkmonitor/extension && \
     wget https://repo.lentiq.com/jupyter_color_scheme/jobtable-extend.css -O /opt/sparkmonitor/extension/jobtable-extend.css && \
     wget https://repo.lentiq.com/jupyter_color_scheme/scr.sh -O /opt/sparkmonitor/extension/scr.sh && \
     wget https://repo.lentiq.com/jupyter_color_scheme/styles-extend.css -O /opt/sparkmonitor/extension/styles-extend.css && \
@@ -172,7 +172,7 @@ RUN cd /opt && \
     yarn run webpack && \
     cd scalalistener/ && \
     sbt package && \
-    cd sparkmonitor/extension/ && \
+    cd /opt/sparkmonitor/extension/ && \
     pip install . && \
     jupyter nbextension install sparkmonitor --py --user --symlink && \
     jupyter nbextension enable sparkmonitor --py --user && \
