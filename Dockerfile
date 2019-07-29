@@ -14,11 +14,6 @@ ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
 ENV JUPYTER_HANDLER_VERSION 0.2
 
-#Install Scala Spark kernel
-ENV SBT_VERSION 0.13.15
-ENV SBT_HOME /usr/local/sbt
-ENV PATH ${PATH}:${SBT_HOME}/bin
-
 #Install yarn and NodeJS
 RUN apt-get update -y
 RUN apt-get upgrade -y
@@ -41,11 +36,11 @@ RUN echo 'export JAVA_HOME="/usr"' >> ~/.bashrc && \
 #RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security && cp UnlimitedJCEPolicyJDK8/local_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security
 #RUN rm -rf UnlimitedJCEPolicyJDK8
 
-# Install sbt
-RUN wget "http://repo.bigstepcloud.com/bigstep/datalab/sbt-0.13.11.tgz"
-RUN tar -xvf /sbt-0.13.11.tgz 
-RUN mv /sbt /usr/local/ && echo -ne "- with sbt $SBT_VERSION\n" >> /root/.built
-
+RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
+    apt-get update && \
+    apt-get install sbt
+    
 # Install Spark 2.4.1
 RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
    tar xzvf /opt/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
@@ -162,12 +157,13 @@ RUN cd /opt && \
     
     cd /opt && \
     git clone https://github.com/krishnan-r/sparkmonitor && \
-    cd /opt/sparkmonitor/extension && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/jobtable-extend.css -O /opt/sparkmonitor/extension/jobtable-extend.css && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/scr.sh -O /opt/sparkmonitor/extension/scr.sh && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/styles-extend.css -O /opt/sparkmonitor/extension/styles-extend.css && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/taskdetails-extend.css -O /opt/sparkmonitor/extension/taskdetails-extend.css && \
+    cd /opt/sparkmonitor/extension/js && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/jobtable-extend.css -O /opt/sparkmonitor/extension/js/jobtable-extend.css && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/scr.sh -O /opt/sparkmonitor/extension/js/scr.sh && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/styles-extend.css -O /opt/sparkmonitor/extension/js/styles-extend.css && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/taskdetails-extend.css -O /opt/sparkmonitor/extension/js/taskdetails-extend.css && \
     sh scr.sh && \
+    cd /opt/sparkmonitor/extension && \
     yarn install && \
     yarn run webpack && \
     cd scalalistener/ && \
