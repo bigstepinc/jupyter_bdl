@@ -155,26 +155,26 @@ RUN cd /opt && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
     
-    cd /opt && \
+    cd / && \
     git clone https://github.com/krishnan-r/sparkmonitor && \
-    cd /opt/sparkmonitor/extension/js && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/jobtable-extend.css -O /opt/sparkmonitor/extension/js/jobtable-extend.css && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/scr.sh -O /opt/sparkmonitor/extension/js/scr.sh && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/styles-extend.css -O /opt/sparkmonitor/extension/js/styles-extend.css && \
-    wget https://repo.lentiq.com/jupyter_color_scheme/taskdetails-extend.css -O /opt/sparkmonitor/extension/js/taskdetails-extend.css && \
+    cd /sparkmonitor/extension/js && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/jobtable-extend.css -O /sparkmonitor/extension/js/jobtable-extend.css && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/scr.sh -O /sparkmonitor/extension/js/scr.sh && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/styles-extend.css -O /sparkmonitor/extension/js/styles-extend.css && \
+    wget https://repo.lentiq.com/jupyter_color_scheme/taskdetails-extend.css -O /sparkmonitor/extension/js/taskdetails-extend.css && \
     sh scr.sh && \
-    cd /opt/sparkmonitor/extension && \
+    cd /sparkmonitor/extension && \
     yarn install && \
     yarn run webpack && \
     cd scalalistener/ && \
     sbt package && \
-    cd /opt/sparkmonitor/extension/ && \
+    cd /sparkmonitor/extension/ && \
     pip install . && \
     jupyter nbextension install sparkmonitor --py --user --symlink && \
     jupyter nbextension enable sparkmonitor --py --user && \
     jupyter serverextension enable --py --user sparkmonitor && \
     ipython profile create && echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
-    rm -rf /opt/sparkmonitor && \
+    rm -rf /sparkmonitor && \
     
     cd /opt && \
     wget https://repo.lentiq.com/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
