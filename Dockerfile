@@ -70,7 +70,7 @@ RUN export PATH=$PATH:$CONDA_DIR/bin
 
 # Install Jupyter notebook 
 RUN $CONDA_DIR/bin/conda install --yes \
-    'notebook>=5.6.0' && \
+    'notebook==5.7.8' && \
     $CONDA_DIR/bin/conda clean -yt
     
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
@@ -135,6 +135,7 @@ RUN cd /opt && \
 
 # Install bdl_notebooks
 RUN cd /opt && \
+    pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-0.1.tar.gz && \
     wget https://repo.lentiq.com/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
     tar -xzvf bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
     rm -rf /opt/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
@@ -149,8 +150,8 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_shared_notebook_module && \
-    pip uninstall -y tornado && \
-    pip install tornado==5.1.1 && \
+    #pip uninstall -y tornado && \
+    #pip install tornado==5.1.1 && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
