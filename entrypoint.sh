@@ -163,7 +163,7 @@ if [ "$DB_TYPE" == "postgresql" ]; then
 
 	export PGPASSWORD=$DB_PASSWORD
 
-	psql -h $POSTGRES_HOSTNAME -p $POSTGRES_PORT  -U  $DB_USER -d $DB_NAME -f $SPARK_HOME/jars/hive-schema-1.2.0.postgres.sql
+	#psql -h $POSTGRES_HOSTNAME -p $POSTGRES_PORT  -U  $DB_USER -d $DB_NAME -f $SPARK_HOME/jars/hive-schema-1.2.0.postgres.sql
 fi
 
 
