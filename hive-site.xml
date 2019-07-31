@@ -42,4 +42,8 @@
         <name>hive.exec.scratchdir</name>
         <value>file:///tmp/hive/</value>
   </property>
+  <property>
+    <name>hive.metastore.schema.verification</name>
+    <value>true</value>
+  </property>
 </configuration>
