@@ -1,10 +1,11 @@
 #!/bin/bash
 
 echo 'export SPARK_VERSION=2.4.1' >> ~/.bashrc
-echo 'export BDLCL_VERSION=0.12.1' >> ~/.bashrc
+echo 'export BDLCL_VERSION=0.13.3' >> ~/.bashrc
 echo 'export BLD_CLIENT_PYTHON_VERSION=1.0.0' >> ~/.bashrc
 echo 'export JUPYTER_NB_MODULE_VERSION=0.3' >> ~/.bashrc
-echo 'export SPARK_HOME="/opt/spark-$SPARK_VERSION-bin-hadoop2.7"'>> ~/.bashrc
+echo 'export HADOOP_VERSION=2.9.2' >> ~/.bashrc
+echo 'export SPARK_HOME="/opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION"'>> ~/.bashrc
 echo 'export BDL_HOME="/opt/bigstepdatalake-$BDLCL_VERSION"' >> ~/.bashrc
 echo 'export JAVA_HOME="/usr"' >> ~/.bashrc                                                                                                                            
 echo 'export PATH="$BDL_HOME/bin:$PATH:/usr/bin:/usr/lib:/opt/hadoop/bin/:/opt/hadoop/sbin/"' >> ~/.bashrc
@@ -89,6 +90,22 @@ if [ "$BDL_DB_PASSWORD" != "" ]; then
 	export DB_PASSWORD=$BDL_DB_PASSWORD
 fi
 
+if [ "$DYNAMIC_PARTITION_VALUE" == "" ]; then
+  DYNAMIC_PARTITION_VALUE=`true`
+fi
+
+if [ "$DYNAMIC_PARTITION_MODE" == "" ]; then
+  DYNAMIC_PARTITION_MODE=`nonstrict`
+fi
+
+if [ "$NR_MAX_DYNAMIC_PARTITIONS" == "" ]; then
+  NR_MAX_DYNAMIC_PARTITIONS=1000
+fi
+
+if [ "$MAX_DYNAMIC_PARTITIONS_PER_NODE" == "" ]; then
+  MAX_DYNAMIC_PARTITIONS_PER_NODE=100
+fi
+
 #Configure core-site.xml based on the configured authentication method
 if [ "$AUTH_METHOD" == "apikey" ]; then
 	mv $SPARK_HOME/conf/core-site.xml.apiKey $SPARK_HOME/conf/core-site.xml
@@ -165,8 +182,6 @@ if [ "$DB_TYPE" == "postgresql" ]; then
 	cd $SPARK_HOME/jars
 
 	export PGPASSWORD=$DB_PASSWORD
-
-	#psql -h $POSTGRES_HOSTNAME -p $POSTGRES_PORT  -U  $DB_USER -d $DB_NAME -f $SPARK_HOME/jars/hive-schema-1.2.0.postgres.sql
 fi
 
 
@@ -186,14 +201,14 @@ if [ "$MODE" == "jupyter" ]; then
 
 fi
 
-rm -rf /opt/spark-$SPARK_VERSION-bin-hadoop2.7/jars/guava-14.0.1.jar
+rm -rf /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION/jars/guava-14.0.1.jar
 
 #Fix python not found file/directory issues
 rm -rf /usr/bin/python
 ln -s /usr/local/bin/python3.6 /usr/bin/python
 
 rm -rf /opt/bigstepdatalake-$BDLCL_VERSION/conf/core-site.xml
-cp /opt/spark-$SPARK_VERSION-bin-hadoop2.7/conf/core-site.xml /opt/bigstepdatalake-$BDLCL_VERSION/conf/
+cp /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION/conf/core-site.xml /opt/bigstepdatalake-$BDLCL_VERSION/conf/
 
 mkdir /root/.ivy2
 mkdir /root/.ivy2/jars
