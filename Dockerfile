@@ -33,8 +33,8 @@ RUN echo 'export JAVA_HOME="/usr"' >> ~/.bashrc && \
 
 RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
-    apt-get update && \
-    apt-get install sbt
+    apt-get update -y && \
+    apt-get install -y sbt
     
 # Install Spark 2.4.1
 RUN cd /opt && wget https://repo.lentiq.com/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION.tgz && \
