@@ -9,10 +9,11 @@ ADD handlers.py /opt/
 RUN apt-get update -y
 
 ENV SPARK_VERSION 2.4.1
-ENV BDLCL_VERSION 0.12.3
+ENV BDLCL_VERSION 0.13.3
 ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
 ENV JUPYTER_HANDLER_VERSION 0.2
+ENV HADOOP_VERSION 2.9.2
 
 #Install yarn and NodeJS
 RUN apt-get update -y
@@ -29,12 +30,6 @@ ENV PATH $PATH:/usr/bin:/usr/lib:/etc/alternatives:/var/lib/dpkg/alternatives
 RUN echo 'export JAVA_HOME="/usr"' >> ~/.bashrc && \
     echo 'export PATH="$PATH:/usr/bin:/usr/lib"' >> ~/.bashrc && \
     bash ~/.bashrc 
-    
-#Add Java Security Policies
-#RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
- #  unzip jce_policy-8.zip
-#RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security && cp UnlimitedJCEPolicyJDK8/local_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security
-#RUN rm -rf UnlimitedJCEPolicyJDK8
 
 RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
@@ -42,12 +37,12 @@ RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.lis
     apt-get install sbt
     
 # Install Spark 2.4.1
-RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
-   tar xzvf /opt/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
-   rm  /opt/spark-$SPARK_VERSION-bin-hadoop2.7.tgz 
+RUN cd /opt && wget https://repo.lentiq.com/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION.tgz && \
+   tar xzvf /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION.tgz && \
+   rm  /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION.tgz 
    
 # Spark pointers for Jupyter Notebook
-ENV SPARK_HOME /opt/spark-$SPARK_VERSION-bin-hadoop2.7
+ENV SPARK_HOME /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION
 
 ENV PATH $PATH:/$SPARK_HOME/bin/
 ADD core-site.xml.apiKey $SPARK_HOME/conf/
@@ -150,8 +145,6 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_shared_notebook_module && \
-    #pip uninstall -y tornado && \
-    #pip install tornado==5.1.1 && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
     jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
@@ -189,9 +182,6 @@ RUN cd /opt && \
 
 #Add Thrift and Metadata support
 RUN cd $SPARK_HOME/jars/ && \
-   #wget http://repo.bigstepcloud.com/bigstep/datalab/hive-schema-1.2.0.postgres.sql && \
-   #wget http://repo.bigstepcloud.com/bigstep/datalab/hive-txn-schema-0.13.0.postgres.sql && \
-   #wget http://repo.bigstepcloud.com/bigstep/datalab/hive-txn-schema-0.14.0.postgres.sql && \
    wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -P $SPARK_HOME/jars/ && \
    add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" && \
    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
