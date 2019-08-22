@@ -95,8 +95,8 @@ RUN pip install modin && \
    pip install numpy==1.14 && \
    pip install mleap && \
    pip install sparkmonitor && \
-   pip install nose pillow
-
+   pip install nose pillow && \
+   pip install ipython==7.7.0
    
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
