@@ -195,10 +195,11 @@ fi
 
 if [ "$MODE" == "jupyter" ]; then 
 
-	export pass=$(python /opt/password.py  $NOTEBOOK_PASSWORD)
-	sed "s/#c.NotebookApp.password = ''/c.NotebookApp.password = \'$pass\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
-	mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
-
+	#export pass=$(python /opt/password.py  $NOTEBOOK_PASSWORD)
+	#sed "s/#c.NotebookApp.password = ''/c.NotebookApp.password = \'$pass\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
+	#mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
+	
+	echo "c.NotebookApp.token='$(cat $JUPYTER_TOKEN_PATH)'" >> /root/.jupyter/jupyter_notebook_config.py
 fi
 
 rm -rf /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION/jars/guava-14.0.1.jar
