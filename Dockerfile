@@ -180,7 +180,8 @@ RUN cd /opt && \
     echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
 
 #Add Thrift and Metadata support
-RUN apt-get autoclean
+RUN apt-get autoclean && \
+    apt-get autoremove 
 RUN cd $SPARK_HOME/jars/ && \
    wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -P $SPARK_HOME/jars/ && \
    add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" && \
