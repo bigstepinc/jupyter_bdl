@@ -2,7 +2,6 @@ FROM ubuntu:16.04
 
 ADD entrypoint.sh /
 ADD execute-notebook.sh /
-ADD password.py /opt/
 ADD env.sh /opt/
 ADD handlers.py /opt/
 
