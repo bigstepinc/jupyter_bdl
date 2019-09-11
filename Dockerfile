@@ -185,6 +185,11 @@ RUN cd $SPARK_HOME/jars/ && \
    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
    apt-get install -y postgresql-client
    
+# add support for hiding the header
+RUN mkdir -p /root/.jupyter/custom 
+
+ADD custom.js /root/.jupyter/custom/ 
+   
 ENV PATH /opt/bigstepdatalake-$BDLCL_VERSION/bin:$PATH
    
 #        Jupyter 
