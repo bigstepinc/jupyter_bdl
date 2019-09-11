@@ -71,7 +71,6 @@ RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
     
 #Install Python3 packages
 RUN cd /root && $CONDA_DIR/bin/conda install --yes \
-    'ipywidgets' \
     'pandas' \
     'matplotlib' \
     'scipy' \
