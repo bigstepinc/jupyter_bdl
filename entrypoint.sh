@@ -229,20 +229,6 @@ echo ".level = SEVERE" >> /opt/bigstepdatalake-$BDLCL_VERSION/conf/logging.prope
 
 cd /lentiq/notebooks
 
-# add configuration for no header display
-mkdir -p /root/.jupyter/custom && \ 
-cd /root/.jupyter/custom && \
-echo "define([
-        'base/js/namespace',
-        'base/js/promises',
-        'jquery'
-     ], function(Jupyter, promises, $) {
-         promises.app_initialized.then(function(appname) {
-             $('#header-container').hide();
-             $('#notification_trusted').hide();
-         });
-     });" >> custom.js
-
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	/execute-notebook.sh &
 	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
