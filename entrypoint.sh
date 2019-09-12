@@ -194,12 +194,8 @@ MODE=$1
 fi
 
 if [ "$MODE" == "jupyter" ]; then 
-
-	#export pass=$(python /opt/password.py  $NOTEBOOK_PASSWORD)
-	#sed "s/#c.NotebookApp.password = ''/c.NotebookApp.password = \'$pass\'/" /root/.jupyter/jupyter_notebook_config.py >> /root/.jupyter/jupyter_notebook_config.py.tmp && \
-	#mv /root/.jupyter/jupyter_notebook_config.py.tmp /root/.jupyter/jupyter_notebook_config.py
-	
-	echo "c.NotebookApp.token='$(cat $JUPYTER_TOKEN_PATH)'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.NotebookApp.token='$NOTEBOOK_TOKEN'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.NotebookApp.ip = '0.0.0.0'" >> /root/.jupyter/jupyter_notebook_config.py
 fi
 
 rm -rf /opt/spark-$SPARK_VERSION-bin-custom-hadoop$HADOOP_VERSION/jars/guava-14.0.1.jar
@@ -231,7 +227,7 @@ cd /lentiq/notebooks
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	/execute-notebook.sh &
-	jupyter notebook --ip=0.0.0.0 --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
+	jupyter notebook --log-level DEBUG --allow-root --NotebookApp.iopub_data_rate_limit=10000000000 
 elif [[ "$MODE" == "codeblock" ]]; then 
 	echo "codeblock"
 else
