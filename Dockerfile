@@ -129,7 +129,7 @@ RUN cd /opt && \
 
 # Install bdl_notebooks
 RUN cd /opt && \
-    pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-0.1.tar.gz && \
+    pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-0.2.tar.gz && \
     wget https://repo.lentiq.com/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
     tar -xzvf bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
     rm -rf /opt/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
