@@ -95,7 +95,9 @@ RUN pip install modin && \
    pip install mleap && \
    pip install sparkmonitor && \
    pip install nose pillow && \
-   pip install ipython==7.7.0
+   pip install ipython==7.7.0 && \
+   pip install tzlocal && \
+   pip install pytz
    
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
