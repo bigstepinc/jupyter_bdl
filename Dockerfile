@@ -10,6 +10,7 @@ RUN apt-get update -y
 ENV SPARK_VERSION 2.4.1
 ENV BDLCL_VERSION 0.13.3
 ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
+ENV BDL_CONTENTS_MANAGER_VERSION 0.1
 ENV JUPYTER_NB_MODULE_VERSION 0.3
 ENV JUPYTER_HANDLER_VERSION 0.2
 ENV HADOOP_VERSION 2.9.2
@@ -136,6 +137,15 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf bdl_client_python && \
+    
+    wget https://repo.lentiq.com/bdl-contents-manager-$BDL_CONTENTS_MANAGER_VERSION.tar.gz && \
+    tar -xzvf bdl-contents-manager-$BDL_CONTENTS_MANAGER_VERSION.tar.gz && \
+    rm -rf /opt/bdl-contents-manager-$BDL_CONTENTS_MANAGER_VERSION.tar.gz && \
+    cd ./bdl-contents-manager && \
+    pip install . && \
+    cd .. && \
+    rm -rf bdl-contents-manager && \
+    
     wget https://repo.lentiq.com/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
     tar -xzvf jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
     rm -rf /opt/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
