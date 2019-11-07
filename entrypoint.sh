@@ -29,6 +29,9 @@ fi
 
 #Commented because of /api/v1/notebooks connection errors
 if [ "$DATALAKE_ID" != "" ]; then
+	echo "from jupyterbdlcm.manager import BDLContentsManager" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "from jupyterbdlcm.local_checkpoints import LocalBDLCheckpoints" >> /root/.jupyter/jupyter_notebook_config.py
+	
 	echo "c = get_config()" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.datalake_id = $DATALAKE_ID" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
@@ -43,6 +46,17 @@ if [ "$DATALAKE_ID" != "" ]; then
 	echo "    'headers': {" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "        'Content-Security-Policy': \"frame-ancestors 'self' http://127.0.0.1:5000/ http://127.0.0.1:5000/*\"," >> /root/.jupyter/jupyter_notebook_config.py
     	echo "}" >> /root/.jupyter/jupyter_notebook_config.py
+	
+	echo "c.NotebookApp.contents_manager_class = BDLContentsManager" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.ContentsManager.checkpoints_class = LocalBDLCheckpoints" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLContentsManager.datapool_name = '$DATAPOOL_NAME'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLContentsManager.project_name = '$PROJECT'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLContentsManager.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLContentsManager.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLCheckpoints.datapool_name = '$DATAPOOL_NAME'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLCheckpoints.project_name = '$PROJECT'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLCheckpoints.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.BDLCheckpoints.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
 }
 fi 
 
