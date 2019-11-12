@@ -7,5 +7,8 @@ define([
              $('#header-container').hide();
              $('#notification_trusted').hide();
              Jupyter._target = '_self';
+             $('#save_notebook_as').hide();
+             $('#rename_notebook').hide();
+             $('#new_notebook').hide();
          });
      });
