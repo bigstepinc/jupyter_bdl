@@ -44,7 +44,7 @@ if [ "$DATALAKE_ID" != "" ]; then
 
 	echo "c.NotebookApp.tornado_settings = {" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "    'headers': {" >> /root/.jupyter/jupyter_notebook_config.py
-	echo "        'Content-Security-Policy': \"frame-ancestors '*' http://127.0.0.1:5000/ http://127.0.0.1:5000/*\"," >> /root/.jupyter/jupyter_notebook_config.py
+	echo "        'Content-Security-Policy': \"frame-ancestors *\"," >> /root/.jupyter/jupyter_notebook_config.py
 	echo "    }" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "}" >> /root/.jupyter/jupyter_notebook_config.py
 	
