@@ -38,6 +38,7 @@ if [ "$DATALAKE_ID" != "" ]; then
 	echo "c.Examples.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
 	
+	echo "c.NotebookApp.base_url = '$BASE_URL'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.NotebookApp.allow_origin = '*' #Basic permission" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.NotebookApp.disable_check_xsrf = True #Otherwise Jupyter restricts you modifying the Iframed Notebook" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.NotebookApp.trust_xheaders = True #May or may not make a difference to you" >> /root/.jupyter/jupyter_notebook_config.py
