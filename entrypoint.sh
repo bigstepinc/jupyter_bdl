@@ -33,12 +33,61 @@ if [ "$DATALAKE_ID" != "" ]; then
 	echo "c.Examples.extract_images = False" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.Examples.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
-fi
+fi 
 
 if [ "$PROJECT" != "" ]; then
 	sed "s/PROJECT-my-spark-bdl-spark-master.PROJECT.svc.cluster.local/${PROJECT}-my-spark-bdl-spark-master.${PROJECT}.svc.cluster.local/" /lentiq/notebooks/Getting\ Started\ Guide.ipynb >> /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp && \
 	mv /lentiq/notebooks/Getting\ Started\ Guide.ipynb.tmp /lentiq/notebooks/Getting\ Started\ Guide.ipynb
 fi 
+
+#update settings needed for code block
+if [ "$BDL_AUTH_METHOD" != "" ]; then
+	export AUTH_METHOD=$BDL_AUTH_METHOD
+fi
+
+if [ "$BDL_AUTH_APIKEY" != "" ]; then
+	export AUTH_APIKEY=$BDL_AUTH_APIKEY
+fi
+
+if [ "$BDL_API_ENDPOINT" != "" ]; then
+	export API_ENDPOINT=$BDL_API_ENDPOINT
+fi
+
+if [ "$BDL_SPARK_WAREHOUSE_DIR" != "" ]; then
+	export SPARK_WAREHOUSE_DIR=$BDL_SPARK_WAREHOUSE_DIR
+fi
+
+if [ "$BDL_MODE" != "" ]; then
+	export MODE=$BDL_MODE
+fi
+
+if [ "$BDL_NOTEBOOK_DIR" != "" ]; then
+	export NOTEBOOK_DIR=$BDL_NOTEBOOK_DIR
+fi
+
+if [ "$BDL_DB_TYPE" != "" ]; then
+	export DB_TYPE=$BDL_DB_TYPE
+fi
+
+if [ "$BDL_POSTGRES_HOSTNAME" != "" ]; then
+	export POSTGRES_HOSTNAME=$BDL_POSTGRES_HOSTNAME
+fi
+
+if [ "$BDL_POSTGRES_PORT" != "" ]; then
+	export POSTGRES_PORT=$BDL_POSTGRES_PORT
+fi
+
+if [ "$BDL_DB_NAME" != "" ]; then
+	export DB_NAME=$BDL_DB_NAME
+fi
+
+if [ "$BDL_DB_USER" != "" ]; then
+	export DB_USER=$BDL_DB_USER
+fi
+
+if [ "$BDL_DB_PASSWORD" != "" ]; then
+	export DB_PASSWORD=$BDL_DB_PASSWORD
+fi
 
 #Configure core-site.xml based on the configured authentication method
 if [ "$AUTH_METHOD" == "apikey" ]; then
@@ -151,9 +200,10 @@ rm -rf /lentiq/notebooks/ml-latest-small.zip
 #remove excessive logging from bdl script
 cp $SPARK_HOME/conf/spark-env.sh.template $SPARK_HOME/conf/spark-env.sh
 echo 'export HADOOP_OPTS="$HADOOP_OPTS -Djava.library.path=/opt/bigstepdatalake-$BDLCL_VERSION/lib"' >> $SPARK_HOME/conf/spark-env.sh
-touch $BDL_HOME/conf/logging.properties
-echo ".level = SEVERE" >> $BDL_HOME/conf/logging.properties
+touch /opt/bigstepdatalake-$BDLCL_VERSION/conf/logging.properties
+echo ".level = SEVERE" >> /opt/bigstepdatalake-$BDLCL_VERSION/conf/logging.properties
 
+cd /lentiq/notebooks
 
 if [[ "$MODE" == "jupyter" && "$SPARK_PUBLIC_DNS" == "" ]]; then 
 	/execute-notebook.sh &

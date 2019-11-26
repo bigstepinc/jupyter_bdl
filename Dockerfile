@@ -12,9 +12,12 @@ ENV SPARK_VERSION 2.4.1
 ENV BDLCL_VERSION 0.12.3
 ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
 ENV JUPYTER_NB_MODULE_VERSION 0.3
+ENV JUPYTER_HANDLER_VERSION 0.2
 
 #Install yarn and NodeJS
-RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y unzip wget curl tar bzip2 software-properties-common git vim gcc openjdk-8-jre make
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install yarn -g
@@ -28,10 +31,10 @@ RUN echo 'export JAVA_HOME="/usr"' >> ~/.bashrc && \
     bash ~/.bashrc 
     
 #Add Java Security Policies
-RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
-   unzip jce_policy-8.zip
-RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security && cp UnlimitedJCEPolicyJDK8/local_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security
-RUN rm -rf UnlimitedJCEPolicyJDK8
+#RUN curl -L -C - -b "oraclelicense=accept-securebackup-cookie" -O http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip && \
+ #  unzip jce_policy-8.zip
+#RUN cp UnlimitedJCEPolicyJDK8/US_export_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security && cp UnlimitedJCEPolicyJDK8/local_policy.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security
+#RUN rm -rf UnlimitedJCEPolicyJDK8
 
 # Install Spark 2.4.1
 RUN cd /opt && wget https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz && \
@@ -90,7 +93,10 @@ RUN pip install modin && \
    pip install setproctitle && \
    pip uninstall -y numpy && \
    pip install numpy==1.14 && \
-   pip install mleap
+   pip install mleap && \
+   pip install sparkmonitor && \
+   pip install nose pillow
+
    
 RUN $CONDA_DIR/bin/conda config --set auto_update_conda False
 
@@ -109,10 +115,6 @@ RUN wget https://repo.lentiq.com/Getting%20Started%20Guide%20%2811%29.ipynb -O /
     wget https://repo.lentiq.com/pySpark%20model%20serving%20example.ipynb -O /user/notebooks/Pyspark\ model\ training\ example.ipynb && \
     wget https://repo.lentiq.com/update%20serving%20model%20%281%29.ipynb -O /user/notebooks/Update\ serving\ model\ example.ipynb
    
-RUN apt-get install -y make
-
-RUN pip install nose pillow
-
 RUN cd /opt && \
     wget https://repo.lentiq.com/bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
     tar -xzvf bigstepdatalake-$BDLCL_VERSION-bin.tar.gz && \
@@ -142,11 +144,26 @@ RUN cd /opt && \
     pip install . && \
     cd .. && \
     rm -rf jupyter_shared_notebook_module && \
+    pip uninstall -y tornado && \
+    pip install tornado==5.1.1 && \
     jupyter nbextension install --py bdl_notebooks --sys-prefix && \
     jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-    jupyter serverextension enable --py bdl_notebooks --sys-prefix
-   
-   
+    jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
+    jupyter nbextension install --py sparkmonitor --user --symlink && \
+    jupyter nbextension enable sparkmonitor --user --py && \
+    jupyter serverextension enable --py --user sparkmonitor && \
+    ipython profile create && \
+    echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py && \
+    cd /opt && \
+    wget https://repo.lentiq.com/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    tar -xzvf jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    rm -rf /opt/jupyter_cell_handler_$JUPYTER_HANDLER_VERSION.tar.gz && \
+    cd ./jupyter_cell_handler && \
+    pip install . && \
+    cd .. && \
+    rm -rf jupyter_cell_handler && \
+    echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
+
 #Add Thrift and Metadata support
 RUN cd $SPARK_HOME/jars/ && \
    wget http://repo.bigstepcloud.com/bigstep/datalab/hive-schema-1.2.0.postgres.sql && \
@@ -155,7 +172,7 @@ RUN cd $SPARK_HOME/jars/ && \
    wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -P $SPARK_HOME/jars/ && \
    add-apt-repository "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" && \
    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-   apt-get install -y postgresql-client 
+   apt-get install -y postgresql-client
    
 ENV PATH /opt/bigstepdatalake-$BDLCL_VERSION/bin:$PATH
    
