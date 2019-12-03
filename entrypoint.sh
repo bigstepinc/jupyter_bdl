@@ -59,6 +59,7 @@ if [ "$DATALAKE_ID" != "" ]; then
 	echo "c.BDLCheckpoints.project_name = '$PROJECT'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.BDLCheckpoints.authorization = '$AUTH_APIKEY'" >> /root/.jupyter/jupyter_notebook_config.py
 	echo "c.BDLCheckpoints.api_endpoint = '$API_ENDPOINT'" >> /root/.jupyter/jupyter_notebook_config.py
+	echo "c.NotebookApp.allow_origin = '*'" >> /root/.jupyter/jupyter_notebook_config.py
 fi 
 
 if [ "$PROJECT" != "" ]; then
