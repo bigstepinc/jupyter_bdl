@@ -69,11 +69,6 @@ RUN $CONDA_DIR/bin/conda install --yes \
     $CONDA_DIR/bin/conda clean -yt
     
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
-
-# Patch jupyter notebook
-RUN wget https://repo.lentiq.com/notebook.patch -O /opt/notebook.patch && \
-patch -p6 -d /opt/conda/lib/python3.6/site-packages/ < /opt/notebook.patch && \
-rm -rf /opt/notebook.patch
     
 #Install Python3 packages
 RUN cd /root && $CONDA_DIR/bin/conda install --yes \
@@ -194,6 +189,11 @@ RUN cd /opt && \
     cd .. && \
     rm -rf jupyter_cell_handler && \
     echo "c.InteractiveShellApp.extensions.append('jupyter_cell_handler.handlers')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
+
+# Patch jupyter notebook
+RUN wget https://repo.lentiq.com/notebook.patch -O /opt/notebook.patch && \
+patch -p6 -d /opt/conda/lib/python3.6/site-packages/ < /opt/notebook.patch && \
+rm -rf /opt/notebook.patch
 
 #Add Thrift and Metadata support
 RUN cd $SPARK_HOME/jars/ && \
