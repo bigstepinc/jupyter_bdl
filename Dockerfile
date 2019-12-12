@@ -192,7 +192,7 @@ RUN cd /opt && \
 
 # Patch jupyter notebook
 RUN wget https://repo.lentiq.com/notebook.patch -O /opt/notebook.patch && \
-patch -t -p6 -d /opt/conda/lib/python3.6/site-packages/ < /opt/notebook.patch && \
+patch -f -t -p6 -d /opt/conda/lib/python3.6/site-packages/ < /opt/notebook.patch && \
 rm -rf /opt/notebook.patch
 
 #Add Thrift and Metadata support
