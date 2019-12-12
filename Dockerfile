@@ -71,7 +71,7 @@ RUN $CONDA_DIR/bin/conda install --yes \
 RUN $CONDA_DIR/bin/jupyter notebook  --generate-config --allow-root
 
 # Patch jupyter notebook
-wget https://repo.lentiq.com/notebook.patch -O /opt/notebook.patch && \
+RUN wget https://repo.lentiq.com/notebook.patch -O /opt/notebook.patch && \
 patch -p6 -d /opt/conda/lib/python3.6/site-packages/ < /opt/notebook.patch && \
 rm -rf /opt/notebook.patch
     
