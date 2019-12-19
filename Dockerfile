@@ -9,7 +9,8 @@ RUN apt-get update -y
 
 ENV SPARK_VERSION 2.4.1
 ENV BDLCL_VERSION 0.13.3
-ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
+#ENV BLD_CLIENT_PYTHON_VERSION 1.0.0
+ENV LENTIQ_PYTHON_VERSION 0.2
 ENV BDL_CONTENTS_MANAGER_VERSION 0.3
 ENV JUPYTER_NB_MODULE_VERSION 0.3
 ENV JUPYTER_HANDLER_VERSION 0.2
@@ -131,14 +132,14 @@ RUN cd /opt && \
 
 # Install bdl_notebooks
 RUN cd /opt && \
-    pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-0.2.tar.gz && \
-    wget https://repo.lentiq.com/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
-    tar -xzvf bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
-    rm -rf /opt/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
-    cd ./bdl_client_python && \
-    pip install . && \
-    cd .. && \
-    rm -rf bdl_client_python && \
+    pip install -U http://repo.bigstepcloud.com/lentiq/lentiq-python-$LENTIQ_PYTHON_VERSION.tar.gz && \
+    #wget https://repo.lentiq.com/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
+    #tar -xzvf bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
+    #rm -rf /opt/bdl_client_python_$BLD_CLIENT_PYTHON_VERSION.tar.gz && \
+    #cd ./bdl_client_python && \
+    #pip install . && \
+    #cd .. && \
+    #rm -rf bdl_client_python && \
     
     wget https://repo.lentiq.com/bdl-contents-manager-$BDL_CONTENTS_MANAGER_VERSION.tar.gz && \
     tar -xzvf bdl-contents-manager-$BDL_CONTENTS_MANAGER_VERSION.tar.gz && \
@@ -148,16 +149,16 @@ RUN cd /opt && \
     cd .. && \
     rm -rf bdl-contents-manager && \
     
-    wget https://repo.lentiq.com/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
-    tar -xzvf jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
-    rm -rf /opt/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
-    cd ./jupyter_shared_notebook_module && \
-    pip install . && \
-    cd .. && \
-    rm -rf jupyter_shared_notebook_module && \
-    jupyter nbextension install --py bdl_notebooks --sys-prefix && \
-    jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
-    jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
+    #wget https://repo.lentiq.com/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
+    #tar -xzvf jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
+    #rm -rf /opt/jupyter_shared_notebook_module_$JUPYTER_NB_MODULE_VERSION.tar.gz && \
+    #cd ./jupyter_shared_notebook_module && \
+    #pip install . && \
+    #cd .. && \
+    #rm -rf jupyter_shared_notebook_module && \
+    #jupyter nbextension install --py bdl_notebooks --sys-prefix && \
+    #jupyter nbextension enable --py bdl_notebooks --sys-prefix && \
+    #jupyter serverextension enable --py bdl_notebooks --sys-prefix && \
     
     cd / && \
     git clone https://github.com/krishnan-r/sparkmonitor && \
