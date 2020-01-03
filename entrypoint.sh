@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'export SPARK_VERSION=2.4.1' >> ~/.bashrc
-echo 'export BDLCL_VERSION=0.13.3' >> ~/.bashrc
+echo 'export BDLCL_VERSION=0.14.1' >> ~/.bashrc
 echo 'export BLD_CLIENT_PYTHON_VERSION=1.0.0' >> ~/.bashrc
 echo 'export JUPYTER_NB_MODULE_VERSION=0.3' >> ~/.bashrc
 echo 'export HADOOP_VERSION=2.9.2' >> ~/.bashrc
